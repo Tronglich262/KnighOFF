@@ -39,18 +39,18 @@ public class PlayerHealth : MonoBehaviour
 
         Debug.Log("Va chạm với: " + collision.gameObject.name);
 
-        if (collision.gameObject.CompareTag("Bullet2"))
-        {
-            StartCoroutine(Hit());
-            TakeDamage(2);
-            Destroy(collision.gameObject);
-        }
-        else if (collision.gameObject.CompareTag("Bullet3"))
-        {
-            StartCoroutine(Hit());
-            TakeDamage(20);
-            Destroy(collision.gameObject);
-        }
+        //if (collision.gameObject.CompareTag("Bullet2"))
+        //{
+        //    StartCoroutine(Hit());
+        //    TakeDamage(2);
+        //    Destroy(collision.gameObject);
+        //}
+        //else if (collision.gameObject.CompareTag("Bullet3"))
+        //{
+        //    StartCoroutine(Hit());
+        //    TakeDamage(20);
+        //    Destroy(collision.gameObject);
+        //}
         if (collision.gameObject.CompareTag("Dinh"))
         {
             StartCoroutine(Hit());
@@ -71,12 +71,12 @@ public class PlayerHealth : MonoBehaviour
     {
         if (isDead) return; // Nếu đã chết thì không nhận sát thương
 
-        if (other.gameObject.CompareTag("Bullet4"))
-        {
-            StartCoroutine(Hit());
-            TakeDamage(50);
-        }
-        else if (other.gameObject.CompareTag("Enemy"))
+        //if (other.gameObject.CompareTag("Bullet4"))
+        //{
+        //    StartCoroutine(Hit());
+        //    TakeDamage(50);
+        //}
+        if (other.gameObject.CompareTag("Enemy"))
         {
             StartCoroutine(Hit());
             TakeDamage(2);

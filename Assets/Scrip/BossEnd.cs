@@ -26,9 +26,25 @@ public class BossEnd : MonoBehaviour
         {
             healthBarUI.SetActive(false); // Ẩn thanh máu khi bắt đầu
         }
+
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+
+        // ✅ Tự động tìm Player nếu chưa gán trong Inspector
+        if (player == null)
+        {
+            GameObject foundPlayer = GameObject.FindGameObjectWithTag("Player");
+            if (foundPlayer != null)
+            {
+                player = foundPlayer.transform;
+            }
+            else
+            {
+                Debug.LogError("BossEnd không tìm thấy GameObject nào có tag 'Player'");
+            }
+        }
     }
+
 
     void Update()
     {
@@ -62,7 +78,7 @@ public class BossEnd : MonoBehaviour
         if (isAttacking) return;
 
         animator.SetBool("Running", true);
-        animator.SetBool("Idle", false);
+       // animator.SetBool("Idle", false);
         animator.SetBool("Attack", false);
 
         Transform target = movingToB ? pointB : pointA;
@@ -73,7 +89,7 @@ public class BossEnd : MonoBehaviour
         {
             movingToB = !movingToB;
             animator.SetBool("Running", false);
-            animator.SetBool("Idle", true);
+          //  animator.SetBool("Idle", true);
         }
     }
 
@@ -82,7 +98,7 @@ public class BossEnd : MonoBehaviour
         if (isAttacking) return;
 
         animator.SetBool("Running", true);
-        animator.SetBool("Idle", false);
+     //   animator.SetBool("Idle", false);
         animator.SetBool("Attack", false);
 
         transform.position = Vector2.MoveTowards(transform.position, player.position, chaseSpeed * Time.deltaTime);
@@ -93,7 +109,7 @@ public class BossEnd : MonoBehaviour
     {
         isAttacking = true;
         animator.SetBool("Running", false);
-        animator.SetBool("Idle", false);
+       // animator.SetBool("Idle", false);
 
         while (isCollidingWithPlayer) 
         {
