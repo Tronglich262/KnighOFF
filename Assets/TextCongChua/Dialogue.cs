@@ -82,7 +82,7 @@ public class Dialogue : MonoBehaviour
    {
       if(!started)
          return;
-      if (waiForNext && Input.GetKeyDown(KeyCode.E))
+      if (waiForNext && Input.GetKeyDown(KeyCode.T))
       {
          waiForNext = false;
          index++;

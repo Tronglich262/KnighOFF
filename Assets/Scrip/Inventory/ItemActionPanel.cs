@@ -20,6 +20,9 @@ namespace Inventory.UI
                 uiButton.onClick.AddListener(() => {
                     Debug.Log($"Button {name} clicked");  // Log kiểm tra sự kiện có chạy không
                     onClickAction?.Invoke();
+
+                    // Tắt panel sau khi nhấn nút
+                    Toggle(false);
                 });
             }
             else
