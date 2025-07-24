@@ -194,5 +194,13 @@ namespace Inventory.UI
                 
             }
         }
+        public void ClearItemSlot(int index)
+        {
+            if (index >= 0 && index < ListOfUiItem.Count)
+            {
+                ListOfUiItem[index].ClearData();
+            }
+        }
+
     }
 }

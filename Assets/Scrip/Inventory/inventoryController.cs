@@ -1,9 +1,10 @@
+using Inventory.Model;
+using Inventory.UI;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using Inventory.UI;
-using Inventory.Model;
 using UnityEngine.UI;
+using static ShopItem;
 
 namespace Inventory
 {
@@ -107,38 +108,74 @@ namespace Inventory
           IItemAction itemAction = inventoryItem.item as IItemAction;
           if (itemAction != null)
           {
-              invontoryUI.ShowItemActions(itemIndex);
-              invontoryUI.AddAction(itemAction.ActionName, () => PerforAction(itemIndex));
-          }
-          IDestroyableItem destroyableItem = inventoryItem.item as IDestroyableItem;
+                invontoryUI.ResetSelection(); //  Xoá nút cũ
+                invontoryUI.ShowItemActions(itemIndex);
+
+                //  Đóng biến index để tránh sai tham chiếu
+                int indexCopy = itemIndex;
+
+                invontoryUI.AddAction(itemAction.ActionName, () => PerforAction(indexCopy));
+
+            }
+            IDestroyableItem destroyableItem = inventoryItem.item as IDestroyableItem;
           if (destroyableItem != null)
           {
-              invontoryUI.AddAction("Drop", () => DropItem(itemIndex, inventoryItem.quantity));
-          }
+                int indexCopy = itemIndex;
+                int quantityCopy = inventoryItem.quantity;
+                invontoryUI.AddAction("Drop", () => DropItem(indexCopy, quantityCopy));
+            }
         }
 
         public void DropItem(int itemIndex, int quantity)
         {
             inventoryDaTa.RemoveItem(itemIndex, quantity);
             invontoryUI.ResetSelection();
-            audioSource.PlayOneShot(dropClip);
+          //  audioSource.PlayOneShot(dropClip);
         }
 
         public void PerforAction(int itemIndex)
         {
-           InventoryItem inventoryItem = inventoryDaTa.GetItemAt(itemIndex);
-           if (inventoryItem.IsEmpty) return;
-           IDestroyableItem destroyableItem = inventoryItem.item as IDestroyableItem;
-           if (destroyableItem != null)
-           {
-               inventoryDaTa.RemoveItem(itemIndex, 1);
-           }
-           IItemAction itemAction = inventoryItem.item as IItemAction;
-           if (itemAction != null)
-           {
-               itemAction.PerforAction(gameObject, inventoryItem.itemState);
-           }
+            InventoryItem inventoryItem = inventoryDaTa.GetItemAt(itemIndex);
+            if (inventoryItem.IsEmpty) return;
+
+            if (inventoryItem.item.Type == ItemType.Healing)
+            {
+                PlayerHealth playerHealth = FindObjectOfType<PlayerHealth>();
+                if (playerHealth != null && playerHealth.IsHealthFull())
+                {
+                    Debug.Log("⚠ Máu đã đầy — Không sử dụng được item hồi máu!");
+                    return;
+                }
+            }
+
+            // Gọi hành động
+            IItemAction itemAction = inventoryItem.item as IItemAction;
+            if (itemAction != null)
+            {
+                itemAction.PerforAction(gameObject, inventoryItem.itemState);
+            }
+
+            // Nếu có thể bị phá huỷ thì xoá
+            IDestroyableItem destroyableItem = inventoryItem.item as IDestroyableItem;
+            if (destroyableItem != null)
+            {
+                inventoryDaTa.RemoveItem(itemIndex, 1);
+            }
+
+            // ❌ KHÔNG dùng ResetAllItems()
+            //  Chỉ cập nhật đúng 1 slot UI bị thay đổi
+            InventoryItem updatedItem = inventoryDaTa.GetItemAt(itemIndex);
+            if (!updatedItem.IsEmpty)
+            {
+                invontoryUI.UpdateData(itemIndex, updatedItem.item.ItemImage, updatedItem.quantity);
+            }
+            else
+            {
+                invontoryUI.ClearItemSlot(itemIndex);
+            }
         }
+
+
 
         private void HandleDragging(int itemIndex)
         {

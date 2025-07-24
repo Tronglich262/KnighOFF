@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
@@ -7,12 +7,9 @@ using UnityEngine.EventSystems;
 
 namespace Inventory.UI
 {
-
-
     public class UiinventoryItem : MonoBehaviour, IPointerClickHandler, IBeginDragHandler,
         IEndDragHandler, IDropHandler, IDragHandler
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
         [SerializeField] private Image itemImage;
         [SerializeField] private TMP_Text quantityTxt;
         [SerializeField] private Image borderImage;
@@ -24,6 +21,13 @@ namespace Inventory.UI
             OnRightMouseBtnClick;
 
         private bool empty = true;
+
+        public int Index { get; private set; } // ✔️ Gán index cho mỗi slot
+
+        public void SetIndex(int index)
+        {
+            Index = index;
+        }
 
         public void Awake()
         {
@@ -63,13 +67,11 @@ namespace Inventory.UI
 
         public void OnDrop(PointerEventData eventData)
         {
-            OnItemDroppedOn.Invoke(this);
-
+            OnItemDroppedOn?.Invoke(this);
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-
         }
 
         public void OnPointerClick(PointerEventData pointerData)
@@ -89,17 +91,20 @@ namespace Inventory.UI
             OnItemEndDrag?.Invoke(this);
         }
 
-
-
         void Start()
         {
-
         }
 
-        // Update is called once per frame
         void Update()
         {
-
         }
+        public void ClearData()
+        {
+            this.itemImage.gameObject.SetActive(false);  // Ẩn hình ảnh
+            this.itemImage.sprite = null;
+            this.quantityTxt.text = "";                  // Xóa text số lượng
+            empty = true;
+        }
+
     }
 }
