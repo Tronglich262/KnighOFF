@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class Mapdautien : MonoBehaviour
 {
     [SerializeField] private InventorySO inventoryData;
-
+    public bool ischeck = false;
     private Animator animator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,9 +22,11 @@ public class Mapdautien : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            ischeck = true;
             //them
             inventoryData.SaveInventory();
             SceneManager.LoadScene("MapDau");
+
         }
     }
 }

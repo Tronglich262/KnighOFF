@@ -37,9 +37,18 @@ namespace Inventory.UI
 
         public void ResetData()
         {
-            this.itemImage.gameObject.SetActive(false);
+            if (itemImage != null)
+            {
+                itemImage.gameObject.SetActive(false);
+                itemImage.sprite = null;
+            }
+
+            if (quantityTxt != null)
+                quantityTxt.text = "";
+
             empty = true;
         }
+
 
         public void OnDestroy()
         {

@@ -1,10 +1,10 @@
-using System;
 using UnityEngine;
 using Inventory.Model;
 
 public class PickUpSystem : MonoBehaviour
 {
     [SerializeField] private InventorySO inventoryData;
+    [SerializeField] private Transform textSpawnTarget;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -14,27 +14,14 @@ public class PickUpSystem : MonoBehaviour
             int reminder = inventoryData.AddItem(item.inventoryItem, item.Quantity);
             if (reminder == 0)
             {
-                Debug.Log($"Đã nhặt hết {item.inventoryItem.name}, gọi DestroyItem().");
+                FloatingTextSpawner.Instance.SpawnText($"Đã nhặt {item.inventoryItem.name}", textSpawnTarget.position);
                 item.DestroyItem();
             }
             else
             {
-                Debug.Log($"Không đủ chỗ cho toàn bộ {item.inventoryItem.name}, còn lại: {reminder}");
+                FloatingTextSpawner.Instance.SpawnText($"Không đủ chỗ cho {item.inventoryItem.name}, còn lại: {reminder}", textSpawnTarget.position);
                 item.Quantity = reminder;
             }
-
         }
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -25,12 +25,12 @@ public class PlayerHealth : MonoBehaviour
             healthBar.maxValue = maxHealth;
             healthBar.value = currentHealth;
         }
-        if (maxHealth <= 0) 
+        if (maxHealth <= 0)
         {
             ScoreManager.Instance.ResetScore();
         }
 
-       
+
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -93,6 +93,7 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
+
         }
     }
 
@@ -102,7 +103,7 @@ public class PlayerHealth : MonoBehaviour
 
         isDead = true; // Đánh dấu nhân vật đã chết
         Debug.Log("Người chơi đã chết!");
-        ScoreManager.Instance.ResetScore(); 
+        ScoreManager.Instance.ResetScore();
 
         // Dừng mọi hoạt động của nhân vật
         GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
@@ -112,7 +113,7 @@ public class PlayerHealth : MonoBehaviour
         // Chạy animation chết
         animator.SetBool("Die", true); // Giữ nhân vật ở animation chết
         StartCoroutine(ResetGame());
-        Debug.Log("Thoi gian reset: " + ResetGame());
+
 
 
     }
@@ -139,7 +140,7 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Hồi máu: " + actualHeal + ", Máu hiện tại: " + currentHealth);
         UpdateHealthUI();
 
-        // 🔥 Gọi Player kích hoạt animation buff
+        // Gọi Player kích hoạt animation buff
         if (player != null)
         {
             player.TriggerBuffAnimation();
@@ -153,8 +154,9 @@ public class PlayerHealth : MonoBehaviour
 
     IEnumerator ResetGame()
     {
-        yield  return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(5f);
         SceneManager.LoadScene("Menu");
+   
     }
-    
+
 }

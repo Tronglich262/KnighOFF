@@ -1,58 +1,60 @@
 using System.Collections;
 using UnityEngine;
-using TMPro;
 
 public class Enemy : MonoBehaviour
 {
     public static event System.Action<int> EnemyDied;
+
+    [Header("Enemy Info")]
     public int enemyID;
     private Animator animator;
     private bool isDead = false;
-    [SerializeField] public GameObject itemDropPrefab;
 
-    public GameObject floatingTextPrefab; // Prefab của "+5"
+    [Header("Item Drop")]
+    [SerializeField] public GameObject itemDropPrefab;
+    [Range(0f, 1f)] public float dropRate = 0.5f; // Tỷ lệ rơi item (50%)
+
     private ScoreManager scoreManager;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
-        scoreManager = FindObjectOfType<ScoreManager>(); 
+        scoreManager = FindObjectOfType<ScoreManager>();
     }
 
     void OnTriggerEnter2D(Collider2D other)
-    {     
-        
+    {
+        if (isDead) return;
 
         if (other.CompareTag("Kiem") || other.CompareTag("Khien"))
         {
-
-            Destroy(gameObject);
-            StartCoroutine(timedeley());
             scoreManager.AddScore(Random.Range(3, 8)); // Cộng điểm
-            
-       
+            StartCoroutine(DieSequence()); // Bắt đầu quá trình chết
         }
     }
 
-    IEnumerator timedeley()
+    IEnumerator DieSequence()
     {
-        animator.SetBool("die", true);
-        yield return new WaitForSeconds(0.3f);
+        isDead = true;
+
+        if (animator != null)
+        {
+            animator.SetBool("die", true);
+            yield return new WaitForSeconds(0.3f); // Đợi animation
+        }
+
+        Die();
     }
 
-    
-
-   
     public void Die()
     {
-        if (itemDropPrefab != null) // Kiểm tra nếu có vật phẩm rơi
+        // Tỉ lệ rơi vật phẩm
+        if (itemDropPrefab != null && Random.value <= dropRate)
         {
-            Instantiate(itemDropPrefab, transform.position, Quaternion.identity); // Sinh vật phẩm tại vị trí của quái
+            Instantiate(itemDropPrefab, transform.position, Quaternion.identity);
         }
-    
-        Destroy(gameObject); // Xóa quái
-        EnemyDied?.Invoke(enemyID);
-    }
 
-    
+        EnemyDied?.Invoke(enemyID);
+        Destroy(gameObject); // Xóa enemy
+    }
 }

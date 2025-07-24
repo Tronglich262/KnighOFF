@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement; 
+using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     public float moveSpeed = 10f;
@@ -52,27 +52,27 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        float moveX = joystick.GetInput().x; // Lấy giá trị từ Joystick
-        rb.linearVelocity = new Vector2(moveX * moveSpeed, rb.linearVelocity.y);
+        if (rb.bodyType != RigidbodyType2D.Dynamic) return;
 
-        // Xét bool nếu nhân vật di chuyển
+        float moveX = joystick.GetInput().x;
+        rb.linearVelocity = new Vector2(moveX * moveSpeed, rb.linearVelocity.y); // ✅ Dùng velocity
+
         animator.SetBool("walk", moveX != 0);
 
-        // Kiểm tra hướng nhân vật để quay mặt
         if (moveX > 0 && !isFacingRight)
             Flip();
-        else if (moveX < 0 && isFacingRight)    
+        else if (moveX < 0 && isFacingRight)
             Flip();
     }
 
     public void Jump()
     {
-       // if (Input.GetKeyDown(KeyCode.Space)) // Chỉ nhảy nếu chạm đất
+        // if (Input.GetKeyDown(KeyCode.Space)) // Chỉ nhảy nếu chạm đất
         //{
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            animator.SetBool("Jump", true);
-            Invoke(nameof(StopJump), 0.5f); // Dừng animation sau 0.5 giây
-       // }
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        animator.SetBool("Jump", true);
+        Invoke(nameof(StopJump), 0.5f); // Dừng animation sau 0.5 giây
+                                        // }
     }
 
     void StopJump()
@@ -144,4 +144,3 @@ public class Player : MonoBehaviour
         }
     }
 }
-    

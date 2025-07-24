@@ -1,19 +1,8 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Wake : MonoBehaviour
 {
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     void Awake()
     {
         if (FindObjectsOfType<Player>().Length > 1)
@@ -23,7 +12,24 @@ public class Wake : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+
+        // Đăng ký callback mỗi khi scene load xong
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    void OnDestroy()
+    {
+        // Gỡ callback để tránh lỗi khi object bị huỷ
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Menu")
+        {
+            Debug.Log("Scene là Menu → Huỷ Player giữ bằng DontDestroy");
+
+            Destroy(gameObject);
+        }
+    }
 }

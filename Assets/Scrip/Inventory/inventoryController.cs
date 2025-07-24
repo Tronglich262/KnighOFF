@@ -79,15 +79,18 @@ namespace Inventory
 
         private void UpdateInventoryUI(Dictionary<int, InventoryItem> inventoryState)
         {
+            if (invontoryUI == null) return;
+
             invontoryUI.ResetAllItems(); // Xóa toàn bộ UI trước khi cập nhật
             foreach (var item in inventoryState)
             {
-                if (!item.Value.IsEmpty) // 🔹 Chỉ cập nhật nếu ô có item
+                if (!item.Value.IsEmpty)
                 {
                     invontoryUI.UpdateData(item.Key, item.Value.item.ItemImage, item.Value.quantity);
                 }
             }
         }
+
 
 
 
@@ -143,7 +146,7 @@ namespace Inventory
                 PlayerHealth playerHealth = FindObjectOfType<PlayerHealth>();
                 if (playerHealth != null && playerHealth.IsHealthFull())
                 {
-                    Debug.Log("⚠ Máu đã đầy — Không sử dụng được item hồi máu!");
+                    Debug.Log(" Máu đã đầy — Không sử dụng được item hồi máu!");
                     return;
                 }
             }
@@ -189,7 +192,7 @@ namespace Inventory
         private void HandleSwapItems(int itemIndex_1, int itemIndex_2)
         {
             inventoryDaTa.SwapItems(itemIndex_1, itemIndex_2);
-            invontoryUI.ResetAllItems(); // 🔹 Xóa UI item đang kéo
+            invontoryUI.ResetAllItems(); //  Xóa UI item đang kéo
             UpdateInventoryUI(inventoryDaTa.GetCurrentInventoryState());
         }
 
@@ -237,16 +240,23 @@ namespace Inventory
                             item.Value.item.ItemImage,
                             item.Value.quantity);
                     }
-                    PlayerPrefs.SetInt("InventoryOpen", 1); // 🔹 Lưu trạng thái mở inventory
+                    PlayerPrefs.SetInt("InventoryOpen", 1); //  Lưu trạng thái mở inventory
                 }
                 else
                 {
                     invontoryUI.hide();
-                    PlayerPrefs.SetInt("InventoryOpen", 0); // 🔹 Lưu trạng thái đóng inventory
+                    PlayerPrefs.SetInt("InventoryOpen", 0); //  Lưu trạng thái đóng inventory
                 }
 
                 PlayerPrefs.Save(); // Lưu dữ liệu lại
             }
         }
+        private void OnDestroy()
+        {
+            if (inventoryDaTa != null)
+                inventoryDaTa.OnInventoryUpdated -= UpdateInventoryUI;
+        }
+
     }
+
 }

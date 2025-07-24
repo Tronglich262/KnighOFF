@@ -11,7 +11,7 @@ public class BossHealth : MonoBehaviour
     public Transform healthBarUI;   // Đối tượng chứa thanh máu (Canvas nhỏ trên đầu Boss)
     public Vector3 offset = new Vector3(0, 2f, 0); // Điều chỉnh vị trí thanh máu
     private Animator animator;
-
+    public GameObject congchua;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -67,6 +67,7 @@ public class BossHealth : MonoBehaviour
     {
         Debug.Log("Boss bị tiêu diệt!");
         StartCoroutine(DelayDie());
+        congchua.SetActive(true); // Hiện công chúa khi Boss chết
     }
 
     IEnumerator DelayDie()
