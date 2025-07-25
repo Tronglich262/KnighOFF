@@ -12,6 +12,7 @@ public class Player1 : MonoBehaviour
     private bool isFacingRight = true;
     private bool isGrounded;
     private float moveX;
+ 
 
     void Start()
     {

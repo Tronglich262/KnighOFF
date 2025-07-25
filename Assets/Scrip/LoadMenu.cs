@@ -51,8 +51,12 @@ public class LoadMenu : MonoBehaviour
         menu.SetActive(!menu.activeSelf);
         help.SetActive(false);
     }
-    
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 
-   
+
+
 
 }

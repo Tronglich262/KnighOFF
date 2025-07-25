@@ -48,5 +48,6 @@ public class SettingGame : MonoBehaviour
    public void Back()
     {
         SceneManager.LoadScene("MENU");
+            ScoreManager.Instance.resetScore();
     }
 }

@@ -88,4 +88,14 @@ public class ScoreManager : MonoBehaviour
     {
         LoadScore(); // Đảm bảo điểm hiển thị ngay khi Scene mới tải
     }
+    public int resetScore()
+    {
+        currentScore = 0;
+        SaveScore();
+        return currentScore;
+    }
+    private void OnApplicationQuit()
+    {
+        resetScore();
+    }
 }
