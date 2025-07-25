@@ -15,8 +15,7 @@ public class Dialogue : MonoBehaviour
    public TMP_Text dialoguetext;
    private bool started;
    private bool waiForNext;
-
-   private void Awake()
+    private void Awake()
    {
       ToggleIndicator(false);
       ToggleWindow(false);
@@ -84,7 +83,7 @@ public class Dialogue : MonoBehaviour
          return;
       if (waiForNext && Input.GetKeyDown(KeyCode.T))
       {
-         waiForNext = false;
+            waiForNext = false;
          index++;
          if (index < dialogues.Count)
          {
@@ -96,6 +95,6 @@ public class Dialogue : MonoBehaviour
             EndDialogue();
          }
       }
-      
-   }
+
+    }
 }

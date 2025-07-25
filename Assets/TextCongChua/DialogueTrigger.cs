@@ -5,6 +5,7 @@ public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue DialogueScript;
     private bool playerDetectedd;
+    public int checkwin = 0;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -30,7 +31,16 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (playerDetectedd && Input.GetKeyDown(KeyCode.T))
         {
+            checkwin++;
             DialogueScript.StartDialogue();
+        }
+    }
+    public void OutEnd()
+    {
+        var Settinggame = FindObjectOfType<SettingGame>();
+        if(Settinggame != null)
+        {
+            Settinggame.Back();
         }
     }
 }

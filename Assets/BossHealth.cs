@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class BossHealth : MonoBehaviour
 {
     public float maxHealth = 100f;  // Máu tối đa
-    private float currentHealth;    // Máu hiện tại
+    public float currentHealth;    // Máu hiện tại
 
     public Slider healthBar;        // Thanh máu UI
     public Transform healthBarUI;   // Đối tượng chứa thanh máu (Canvas nhỏ trên đầu Boss)
@@ -31,17 +31,19 @@ public class BossHealth : MonoBehaviour
     {
         if (collision.CompareTag("Kiem") || collision.CompareTag("Khien")) // Nếu bị tấn công
         {
-                animator.SetBool("Damaged", true);  // Gọi animation bị đánh
-                TakeDamage(10); // Trừ máu
-        }
-        else
-        {
-            animator.SetBool("Damaged", false);
+               StartCoroutine(Mau()); // Gọi coroutine để xử lý bị đánh
         }
     }
     
 
+    IEnumerator Mau()
+    {
+        animator.SetBool("Damaged", true);  // Gọi animation bị đánh
+        TakeDamage(10); // Trừ máu
+        yield return new WaitForSeconds(0.5f); // Thời gian bị đánh
+        animator.SetBool("Damaged", false);
 
+    }
 
     void TakeDamage(float damage)
     {

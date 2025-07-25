@@ -13,7 +13,7 @@ public class PlayerHealth : MonoBehaviour
     public Slider healthBar;
     private Animator animator;
     private Player player;
-
+    public GameObject panelgame;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -154,9 +154,9 @@ public class PlayerHealth : MonoBehaviour
 
     IEnumerator ResetGame()
     {
-        yield return new WaitForSeconds(5f);
-        SceneManager.LoadScene("Menu");
-   
+        yield return new WaitForSeconds(2f);
+        panelgame.SetActive(true);
+
     }
 
-}
+}   
