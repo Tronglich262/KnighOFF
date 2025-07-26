@@ -6,7 +6,7 @@ public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance;
     public TextMeshProUGUI scoreText;
-    private int currentScore;
+    public int currentScore;
 
     public event Action OnScoreChanged; // Sự kiện khi điểm thay đổi
 

@@ -27,7 +27,7 @@ public class Wake : MonoBehaviour
     {
         if (scene.name == "Menu")
         {
-            Debug.Log("Scene là Menu → Huỷ Player giữ bằng DontDestroy");
+            Debug.Log("Scene là Menu Huỷ Player giữ bằng DontDestroy");
 
             Destroy(gameObject);
         }

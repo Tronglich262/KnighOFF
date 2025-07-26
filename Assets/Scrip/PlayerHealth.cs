@@ -14,6 +14,13 @@ public class PlayerHealth : MonoBehaviour
     private Animator animator;
     private Player player;
     public GameObject panelgame;
+    public Image huyhieulose;
+    public Image yeusao;
+    public Image trungbinhsao;
+    public Image totsao;
+    public Image huyhieuyeu;
+    public Image huyhieutrungbinh;
+    public Image huyhieutot;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -103,13 +110,11 @@ public class PlayerHealth : MonoBehaviour
 
         isDead = true; // Đánh dấu nhân vật đã chết
         Debug.Log("Người chơi đã chết!");
-        ScoreManager.Instance.ResetScore();
 
         // Dừng mọi hoạt động của nhân vật
         GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
-        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        GetComponent<Rigidbody2D>().simulated = false;
         GetComponent<Collider2D>().enabled = false; // Vô hiệu hóa va chạm
-
         // Chạy animation chết
         animator.SetBool("Die", true); // Giữ nhân vật ở animation chết
         StartCoroutine(ResetGame());
@@ -117,7 +122,7 @@ public class PlayerHealth : MonoBehaviour
 
 
     }
-
+        
     void UpdateHealthUI()
     {
         if (healthBar != null)
@@ -156,6 +161,47 @@ public class PlayerHealth : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         panelgame.SetActive(true);
+       StartCoroutine(lanluothiensao());
+
+    }
+    IEnumerator lanluothiensao()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (ScoreManager.Instance.currentScore >= 1000)
+        {
+            yield return new WaitForSeconds(0.5f);
+            huyhieutot.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+            yeusao.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+            trungbinhsao.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+            totsao.gameObject.SetActive(true);
+        }
+        else if (ScoreManager.Instance.currentScore >= 600)
+        {
+            yield return new WaitForSeconds(0.5f);
+            huyhieutrungbinh.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+            yeusao.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+            trungbinhsao.gameObject.SetActive(true);
+        }
+        else if (ScoreManager.Instance.currentScore >= 300)
+        {
+            yield return new WaitForSeconds(0.5f);
+            huyhieuyeu.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+            yeusao.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+
+        }
+        else if (ScoreManager.Instance.currentScore <= 300)
+        {
+            yield return new WaitForSeconds(0.5f);
+            huyhieulose.gameObject.SetActive(true);
+
+        }
 
     }
 
