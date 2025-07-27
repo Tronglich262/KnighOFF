@@ -21,10 +21,15 @@ public class PlayerHealth : MonoBehaviour
     public Image huyhieuyeu;
     public Image huyhieutrungbinh;
     public Image huyhieutot;
+    public AudioClip deathClip;
+    public AudioClip sao;
+    private AudioSource audioSource;      // Component phát âm thanh
+
     void Start()
     {
         animator = GetComponent<Animator>();
         player = FindObjectOfType<Player>();
+        audioSource = GetComponent<AudioSource>();
 
         currentHealth = maxHealth;
         if (healthBar != null)
@@ -87,23 +92,30 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
-        if (isDead) return; // Nếu đã chết rồi thì không gọi lại
+        if (isDead) return;
 
-        isDead = true; // Đánh dấu nhân vật đã chết
+        isDead = true;
+
         Debug.Log("Người chơi đã chết!");
 
-        // Dừng mọi hoạt động của nhân vật
+        // Dừng mọi hoạt động vật lý
         GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
         GetComponent<Rigidbody2D>().simulated = false;
-        GetComponent<Collider2D>().enabled = false; // Vô hiệu hóa va chạm
-        // Chạy animation chết
-        animator.SetBool("Die", true); // Giữ nhân vật ở animation chết
+        GetComponent<Collider2D>().enabled = false;
+
+        // Phát âm thanh chết (dùng PlayOneShot để không cần gán clip trước)
+        if (audioSource != null && deathClip != null)
+        {
+            audioSource.PlayOneShot(deathClip);
+        }
+
+        // Animation chết
+        animator.SetBool("Die", true);
+
         StartCoroutine(ResetGame());
-
-
-
     }
-        
+
+
     void UpdateHealthUI()
     {
         if (healthBar != null)
@@ -151,28 +163,45 @@ public class PlayerHealth : MonoBehaviour
         {
             yield return new WaitForSeconds(0.5f);
             huyhieutot.gameObject.SetActive(true);
+            audioSource.PlayOneShot(sao);
             yield return new WaitForSeconds(0.5f);
             yeusao.gameObject.SetActive(true);
+            audioSource.PlayOneShot(sao);
+
             yield return new WaitForSeconds(0.5f);
             trungbinhsao.gameObject.SetActive(true);
+            audioSource.PlayOneShot(sao);
+
             yield return new WaitForSeconds(0.5f);
             totsao.gameObject.SetActive(true);
+            audioSource.PlayOneShot(sao);
+
         }
         else if (ScoreManager.Instance.currentScore >= 600)
         {
             yield return new WaitForSeconds(0.5f);
             huyhieutrungbinh.gameObject.SetActive(true);
+            audioSource.PlayOneShot(sao);
+
             yield return new WaitForSeconds(0.5f);
             yeusao.gameObject.SetActive(true);
+            audioSource.PlayOneShot(sao);
+
             yield return new WaitForSeconds(0.5f);
             trungbinhsao.gameObject.SetActive(true);
+            audioSource.PlayOneShot(sao);
+
         }
         else if (ScoreManager.Instance.currentScore >= 300)
         {
             yield return new WaitForSeconds(0.5f);
+            audioSource.PlayOneShot(sao);
+
             huyhieuyeu.gameObject.SetActive(true);
             yield return new WaitForSeconds(0.5f);
             yeusao.gameObject.SetActive(true);
+            audioSource.PlayOneShot(sao);
+
             yield return new WaitForSeconds(0.5f);
 
         }
@@ -180,6 +209,8 @@ public class PlayerHealth : MonoBehaviour
         {
             yield return new WaitForSeconds(0.5f);
             huyhieulose.gameObject.SetActive(true);
+            audioSource.PlayOneShot(sao);
+
 
         }
 

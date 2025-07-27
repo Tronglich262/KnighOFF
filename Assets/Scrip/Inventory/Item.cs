@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +10,7 @@ public class Item : MonoBehaviour
     public ItemSO inventoryItem { get; private set; }
 
     [field: SerializeField] public int Quantity { get; set; } = 1;
-    [SerializeField] private AudioSource audioSource;
+    public AudioSource coinAudioPrefab; // Prefab chứa AudioSource có sẵn clip
     [SerializeField] private float duration = 0.3f;
 
     private SpriteRenderer spriteRenderer;
@@ -39,9 +39,12 @@ public class Item : MonoBehaviour
 
     private IEnumerator AnimateItemPickup()
     {
-        if (audioSource != null)
+        // Phát âm thanh bằng prefab tách riêng
+        if (coinAudioPrefab != null)
         {
-            audioSource.Play();
+            AudioSource audioInstance = Instantiate(coinAudioPrefab, transform.position, Quaternion.identity);
+            audioInstance.Play();
+            Destroy(audioInstance.gameObject, audioInstance.clip.length); // Xoá sau khi phát xong
         }
 
         Vector3 startScale = transform.localScale;
