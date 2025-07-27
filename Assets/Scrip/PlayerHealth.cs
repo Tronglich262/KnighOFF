@@ -43,21 +43,6 @@ public class PlayerHealth : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (isDead) return; // Nếu đã chết thì không nhận sát thương
-
-        Debug.Log("Va chạm với: " + collision.gameObject.name);
-
-        //if (collision.gameObject.CompareTag("Bullet2"))
-        //{
-        //    StartCoroutine(Hit());
-        //    TakeDamage(2);
-        //    Destroy(collision.gameObject);
-        //}
-        //else if (collision.gameObject.CompareTag("Bullet3"))
-        //{
-        //    StartCoroutine(Hit());
-        //    TakeDamage(20);
-        //    Destroy(collision.gameObject);
-        //}
         if (collision.gameObject.CompareTag("Dinh"))
         {
             StartCoroutine(Hit());
@@ -78,11 +63,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (isDead) return; // Nếu đã chết thì không nhận sát thương
 
-        //if (other.gameObject.CompareTag("Bullet4"))
-        //{
-        //    StartCoroutine(Hit());
-        //    TakeDamage(50);
-        //}
+      
         if (other.gameObject.CompareTag("Enemy"))
         {
             StartCoroutine(Hit());
@@ -145,7 +126,6 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Hồi máu: " + actualHeal + ", Máu hiện tại: " + currentHealth);
         UpdateHealthUI();
 
-        // Gọi Player kích hoạt animation buff
         if (player != null)
         {
             player.TriggerBuffAnimation();

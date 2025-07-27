@@ -75,7 +75,7 @@ public class EnemyAI : MonoBehaviour
 
     void ChasePlayer()
     {
-       // animator.SetBool("isRunning", true);
+        // animator.SetBool("isRunning", true);
 
         // Đuổi theo Player
         transform.position = Vector2.MoveTowards(transform.position, player.position, chaseSpeed * Time.deltaTime);
@@ -139,5 +139,5 @@ public class EnemyAI : MonoBehaviour
             transform.localScale = newScale;
         }
     }
-    
+
 }

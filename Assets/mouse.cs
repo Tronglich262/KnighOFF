@@ -8,6 +8,7 @@ public class mouse : MonoBehaviour
     public Player1 playerScript; // Script Player cần bật/tắt
     private bool isActive = true; // Trạng thái hiện tại
     public bool CheckScrip = false;
+    public GameObject pcsetting;
     private void Start()
     {
         // Gán sự kiện bấm vào button
@@ -16,18 +17,32 @@ public class mouse : MonoBehaviour
 
     private void ToggleActive()
     {
-        isActive = !isActive; // Đảo trạng thái
+        isActive = !isActive;
 
-        // Bật/tắt 5 button khác
+        bool anyButtonInactive = false;
+
         foreach (GameObject btn in otherButtons)
         {
             if (btn != null)
-                btn.SetActive(!isActive);
+            {
+                btn.SetActive(!isActive); // Đảo trạng thái
+                if (!btn.activeSelf)      // Nếu sau khi bị tắt
+                {
+                    anyButtonInactive = true;
+                }
+            }
         }
-        
-        // Bật/tắt Script Player
+
+        // Nếu có bất kỳ button nào đang tắt → bật pcsetting
+        if (pcsetting != null)
+        {
+            pcsetting.SetActive(anyButtonInactive);
+        }
+
         if (playerScript != null)
+        {
             playerScript.enabled = isActive;
-           
+        }
     }
+
 }

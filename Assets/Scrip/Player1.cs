@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class Player1 : MonoBehaviour
 {
@@ -12,123 +14,192 @@ public class Player1 : MonoBehaviour
     private bool isFacingRight = true;
     private bool isGrounded;
     private float moveX;
- 
+
+    public Button jumpButton;
+    public Button kiemButton;
+    public Button khienButton;
+    public Button hoimauButton;
+
+    public TextMeshProUGUI kiemCooldownText;
+    public TextMeshProUGUI khienCooldownText;
+    public TextMeshProUGUI hoimauCooldownText;
+    public TextMeshProUGUI jumpCooldownText;
+
+    public Image kiemCooldownPanel;
+    public Image khienCooldownPanel;
+    public Image hoimauCooldownPanel;
+    public Image jumpCooldownPanel;
+
+    public static Player1 Instance;
+
+    public float kiemCooldown = 1f;
+    public float khienCooldown = 2f;
+    public float hoimauCooldown = 3f;
+    public float jumpCooldown = 1f;
+
+    private bool canUseKiem = true;
+    private bool canUseKhien = true;
+    private bool canUseHoiMau = true;
+    private bool canJump = true;
+
+    private float kiemTimer = 0f;
+    private float khienTimer = 0f;
+    private float hoimauTimer = 0f;
+    private float jumpTimer = 0f;
+
+    public void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        if (jumpButton != null) jumpButton.onClick.AddListener(Jump);
+        if (kiemButton != null) kiemButton.onClick.AddListener(Attack);
+        if (khienButton != null) khienButton.onClick.AddListener(Shield);
+        if (hoimauButton != null) hoimauButton.onClick.AddListener(TriggerBuffAnimation);
+
+        SetCooldownUIActive(false);
+    }
+
+    void SetCooldownUIActive(bool active)
+    {
+        kiemCooldownText.gameObject.SetActive(active);
+        khienCooldownText.gameObject.SetActive(active);
+        hoimauCooldownText.gameObject.SetActive(active);
+        jumpCooldownText.gameObject.SetActive(active);
+
+        kiemCooldownPanel.gameObject.SetActive(active);
+        khienCooldownPanel.gameObject.SetActive(active);
+        hoimauCooldownPanel.gameObject.SetActive(active);
+        jumpCooldownPanel.gameObject.SetActive(active);
     }
 
     void Update()
     {
-        // Lấy input trong Update
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+
         moveX = Input.GetAxisRaw("Horizontal");
+        animator?.SetBool("walk", moveX != 0);
 
-        // Animation di chuyển
-        if (animator != null)
-            animator.SetBool("walk", moveX != 0);
-
-        // Đổi hướng
         if (moveX > 0 && !isFacingRight) Flip();
         else if (moveX < 0 && isFacingRight) Flip();
 
-        // Nhảy
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Jump();
-        }
+        if (Input.GetKeyDown(KeyCode.Space)) Jump();
+        if (Input.GetKeyDown(KeyCode.Q)) Attack();
+        if (Input.GetKeyDown(KeyCode.W)) Shield();
+        if (Input.GetKeyDown(KeyCode.E)) TriggerBuffAnimation();
+        if (Input.GetKeyDown(KeyCode.I)) ToggleInventory();
 
-        // Tấn công
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Attack();
-        }
-
-        // Khiên
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            Shield();
-        }
-
-        // Buff
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            TriggerBuffAnimation();
-        }
-
-        // Mở túi đồ
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            ToggleInventory();
-        }
+        UpdateCooldownUI();
     }
 
     void FixedUpdate()
     {
-        // Di chuyển vật lý mượt hơn
         rb.linearVelocity = new Vector2(moveX * moveSpeed, rb.linearVelocity.y);
     }
 
     void Jump()
     {
+        // if (!canJump || !isGrounded) return;
+        if (!canJump) return;
+
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         isGrounded = false;
-        if (animator != null)
-            animator.SetBool("Jump", true);
+        animator?.SetBool("Jump", true);
         Invoke(nameof(StopJump), 0.5f);
+
+        canJump = false;
+        jumpTimer = jumpCooldown;
+        jumpCooldownPanel.fillAmount = 1f;
+        jumpCooldownText.gameObject.SetActive(true);
+        jumpCooldownPanel.gameObject.SetActive(true);
+        jumpButton.interactable = false;
+        //Invoke(nameof(ResetJumpCooldown), jumpCooldown);
     }
 
-    void StopJump()
+    void ResetJumpCooldown()
     {
-        if (animator != null)
-            animator.SetBool("Jump", false);
+        canJump = true;
+        jumpButton.interactable = true;
     }
+
+    void StopJump() => animator?.SetBool("Jump", false);
 
     void Attack()
     {
-        if (animator != null)
-        {
-            animator.SetBool("guomattack", true);
-            Invoke(nameof(StopAttack), 0.5f);
-        }
+        if (!canUseKiem) return;
+
+        animator?.SetBool("guomattack", true);
+        Invoke(nameof(StopAttack), 0.5f);
+
+        canUseKiem = false;
+        kiemTimer = kiemCooldown;
+        kiemCooldownPanel.fillAmount = 1f;
+        kiemCooldownText.gameObject.SetActive(true);
+        kiemCooldownPanel.gameObject.SetActive(true);
+        kiemButton.interactable = false;
+        // Xóa Invoke(nameof(ResetKiemCooldown), kiemCooldown);
     }
 
-    void StopAttack()
+    void ResetKiemCooldown()
     {
-        if (animator != null)
-            animator.SetBool("guomattack", false);
+        canUseKiem = true;
+        kiemButton.interactable = true;
     }
+
+    void StopAttack() => animator?.SetBool("guomattack", false);
 
     void Shield()
     {
-        if (animator != null)
-        {
-            animator.SetBool("khien", true);
-            Invoke(nameof(StopShield), 1f);
-        }
+        if (!canUseKhien) return;
+
+        animator?.SetBool("khien", true);
+        Invoke(nameof(StopShield), 1f);
+
+        canUseKhien = false;
+        khienTimer = khienCooldown;
+        khienCooldownPanel.fillAmount = 1f;
+        khienCooldownText.gameObject.SetActive(true);
+        khienCooldownPanel.gameObject.SetActive(true);
+        khienButton.interactable = false;
+       // Invoke(nameof(ResetKhienCooldown), khienCooldown);
     }
 
-    void StopShield()
+    void ResetKhienCooldown()
     {
-        if (animator != null)
-            animator.SetBool("khien", false);
+        canUseKhien = true;
+        khienButton.interactable = true;
     }
+
+    void StopShield() => animator?.SetBool("khien", false);
 
     void TriggerBuffAnimation()
     {
-        if (animator != null)
-        {
-            animator.SetBool("buff", true);
-            Invoke(nameof(StopBuffAnimation), 1f);
-        }
+        if (!canUseHoiMau) return;
+
+        animator?.SetBool("buff", true);
+        Invoke(nameof(StopBuffAnimation), 1f);
+
+        canUseHoiMau = false;
+        hoimauTimer = hoimauCooldown;
+        hoimauCooldownPanel.fillAmount = 1f;
+        hoimauCooldownText.gameObject.SetActive(true);
+        hoimauCooldownPanel.gameObject.SetActive(true);
+        hoimauButton.interactable = false;
+       // Invoke(nameof(ResetHoiMauCooldown), hoimauCooldown);
     }
 
-    void StopBuffAnimation()
+    void ResetHoiMauCooldown()
     {
-        if (animator != null)
-            animator.SetBool("buff", false);
+        canUseHoiMau = true;
+        hoimauButton.interactable = true;
     }
+
+    void StopBuffAnimation() => animator?.SetBool("buff", false);
 
     void Flip()
     {
@@ -138,25 +209,83 @@ public class Player1 : MonoBehaviour
         transform.localScale = scale;
     }
 
-    //void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Ground"))
-    //    {
-    //        isGrounded = true;
-    //    }
-    //}
-
-    //void OnCollisionExit2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Ground"))
-    //    {
-    //        isGrounded = false;
-    //    }
-    //}
-
     void ToggleInventory()
     {
         Debug.Log("Mở túi đồ");
-        // Thêm code bật/tắt UI túi đồ ở đây
+    }
+
+    void UpdateCooldownUI()
+    {
+        // KIẾM
+        if (!canUseKiem)
+        {
+            kiemTimer -= Time.deltaTime;
+            kiemTimer = Mathf.Max(kiemTimer, 0f); // Không để âm
+            kiemCooldownText.text = kiemTimer.ToString("F1");
+            kiemCooldownPanel.fillAmount = kiemTimer / kiemCooldown;
+
+            if (kiemTimer <= 0f)
+            {
+                canUseKiem = true;
+                kiemButton.interactable = true;
+                kiemCooldownText.text = "";
+                kiemCooldownText.gameObject.SetActive(false);
+                kiemCooldownPanel.gameObject.SetActive(false);
+            }
+        }
+
+        // KHIÊN
+        if (!canUseKhien)
+        {
+            khienTimer -= Time.deltaTime;
+            khienTimer = Mathf.Max(khienTimer, 0f);
+            khienCooldownText.text = khienTimer.ToString("F1");
+            khienCooldownPanel.fillAmount = khienTimer / khienCooldown;
+
+            if (khienTimer <= 0f)
+            {
+                canUseKhien = true;
+                khienButton.interactable = true;
+                khienCooldownText.text = "";
+                khienCooldownText.gameObject.SetActive(false);
+                khienCooldownPanel.gameObject.SetActive(false);
+            }
+        }
+
+        // BUFF
+        if (!canUseHoiMau)
+        {
+            hoimauTimer -= Time.deltaTime;
+            hoimauTimer = Mathf.Max(hoimauTimer, 0f);
+            hoimauCooldownText.text = hoimauTimer.ToString("F1");
+            hoimauCooldownPanel.fillAmount = hoimauTimer / hoimauCooldown;
+
+            if (hoimauTimer <= 0f)
+            {
+                canUseHoiMau = true;
+                hoimauButton.interactable = true;
+                hoimauCooldownText.text = "";
+                hoimauCooldownText.gameObject.SetActive(false);
+                hoimauCooldownPanel.gameObject.SetActive(false);
+            }
+        }
+
+        // JUMP
+        if (!canJump)
+        {
+            jumpTimer -= Time.deltaTime;
+            jumpTimer = Mathf.Max(jumpTimer, 0f);
+            jumpCooldownText.text = jumpTimer.ToString("F1");
+            jumpCooldownPanel.fillAmount = jumpTimer / jumpCooldown;
+
+            if (jumpTimer <= 0f)
+            {
+                canJump = true;
+                jumpButton.interactable = true;
+                jumpCooldownText.text = "";
+                jumpCooldownText.gameObject.SetActive(false);
+                jumpCooldownPanel.gameObject.SetActive(false);
+            }
+        }
     }
 }
