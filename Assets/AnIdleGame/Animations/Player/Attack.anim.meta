@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 472b85a75b5813546b6b4803cf712e20
+timeCreated: 1434859207
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 37495
+  packageName: An Idle Game
+  packageVersion: 1.0
+  assetPath: Assets/AnIdleGame/Animations/Player/Attack.anim
+  uploadId: 70484

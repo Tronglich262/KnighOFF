@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3900b174c0be2cb47b1b49c1402099a5
+timeCreated: 1433643623
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 37495
+  packageName: An Idle Game
+  packageVersion: 1.0
+  assetPath: Assets/AnIdleGame/Animations/Monsters/1/1.controller
+  uploadId: 70484

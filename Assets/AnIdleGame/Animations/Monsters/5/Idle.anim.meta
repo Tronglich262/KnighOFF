@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cf32640ee26d0de41b3580e64ccae042
+timeCreated: 1434862229
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 37495
+  packageName: An Idle Game
+  packageVersion: 1.0
+  assetPath: Assets/AnIdleGame/Animations/Monsters/5/Idle.anim
+  uploadId: 70484

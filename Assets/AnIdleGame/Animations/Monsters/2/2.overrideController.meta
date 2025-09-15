@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2ce09367596cd7049a6fc9c63222d402
+timeCreated: 1434860592
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 37495
+  packageName: An Idle Game
+  packageVersion: 1.0
+  assetPath: Assets/AnIdleGame/Animations/Monsters/2/2.overrideController
+  uploadId: 70484

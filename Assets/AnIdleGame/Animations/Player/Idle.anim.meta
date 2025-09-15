@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: da4ebee6f08ded54ea11b15d0db65f51
+timeCreated: 1434859174
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 37495
+  packageName: An Idle Game
+  packageVersion: 1.0
+  assetPath: Assets/AnIdleGame/Animations/Player/Idle.anim
+  uploadId: 70484

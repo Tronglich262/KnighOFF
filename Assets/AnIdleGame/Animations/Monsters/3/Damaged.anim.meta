@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5501cdc7e22386a4b9d49bf7de60afa9
+timeCreated: 1434861386
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 37495
+  packageName: An Idle Game
+  packageVersion: 1.0
+  assetPath: Assets/AnIdleGame/Animations/Monsters/3/Damaged.anim
+  uploadId: 70484

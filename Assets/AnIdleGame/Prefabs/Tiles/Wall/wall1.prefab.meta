@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c41d73396e0bc7b4cad24bfe8ad48175
+timeCreated: 1433651007
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 37495
+  packageName: An Idle Game
+  packageVersion: 1.0
+  assetPath: Assets/AnIdleGame/Prefabs/Tiles/Wall/wall1.prefab
+  uploadId: 70484

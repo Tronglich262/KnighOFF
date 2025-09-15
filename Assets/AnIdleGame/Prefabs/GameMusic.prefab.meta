@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e873d90c2a503e249971d6edeeb5516b
+timeCreated: 1432276642
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 37495
+  packageName: An Idle Game
+  packageVersion: 1.0
+  assetPath: Assets/AnIdleGame/Prefabs/GameMusic.prefab
+  uploadId: 70484

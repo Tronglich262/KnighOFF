@@ -1,27 +1,40 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+public enum TypeEnemy
+{
+    Quaidoi,   // quái bay
+    Qualua,    // quái lửa - dưới đất
+    Slim,      // quái slime - dưới đất
+}
 
 public class EnemyAI : MonoBehaviour
 {
-    public Transform pointA; // Điểm A (vị trí tuần tra)
-    public Transform pointB; // Điểm B (vị trí tuần tra)
+    [Header("Điểm tuần tra")]
+    public Transform pointA;
+    public Transform pointB;
+
+    [Header("Loại quái")]
+    public TypeEnemy typeEnemy;
+
+    [Header("Chỉ số tốc độ")]
+    public float speed = 2f;
+    public float chaseSpeed = 4f;
+    public float stopDistance = 0.5f;
+
     private Transform player;
-
-    public float speed = 2f; // Tốc độ tuần tra
-    public float chaseSpeed = 4f; // Tốc độ đuổi theo Player
-    public float stopDistance = 0.5f; // Khoảng cách dừng lại khi gần Player
-
-    private bool movingToB = true; // Kiểm tra hướng di chuyển
-    private bool isChasing = false; // Kiểm tra trạng thái tấn công
-
     private Animator animator;
     private Rigidbody2D rb;
+
+    private bool movingToB = true;
+    private bool isChasing = false;
+    private bool isAttacking = false; // chống spam tấn công
 
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
@@ -29,84 +42,114 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Không tìm thấy Player! ");
+            Debug.LogWarning("Không tìm thấy Player!");
         }
     }
 
     void Update()
     {
-        // Kiểm tra xem Player có trong vùng giữa A & B không
+        if (player == null || isAttacking) return;
+
         bool playerInZone = IsPlayerBetweenAandB();
 
-        if (playerInZone)
+        switch (typeEnemy)
         {
-            isChasing = true; // Nếu Player trong vùng, quái sẽ tấn công
-        }
-        else
-        {
-            isChasing = false; // Nếu Player rời khỏi vùng, quái trở lại tuần tra
-        }
+            case TypeEnemy.Quaidoi: // quái bay
+                if (playerInZone)
+                    FlyChasePlayer();
+                else
+                    FlyPatrol();
+                break;
 
-        if (isChasing)
-        {
-            ChasePlayer();
-        }
-        else
-        {
-            Patrol();
+            case TypeEnemy.Qualua: // quái dưới đất
+                isChasing = playerInZone;
+                if (isChasing) GroundChasePlayer();
+                else GroundPatrol(speed);
+                break;
+
+            case TypeEnemy.Slim: // slime chậm hơn
+                isChasing = playerInZone;
+                if (isChasing) GroundChasePlayer();
+                else GroundPatrol(speed * 0.5f);
+                break;
         }
     }
 
-    void Patrol()
+    // ========== QUÁI DƯỚI ĐẤT ==========
+    void GroundPatrol(float moveSpeed)
     {
-        //animator.SetBool("isRunning", true);
+        if (pointA == null || pointB == null) return;
+
+        Vector2 target = new Vector2((movingToB ? pointB : pointA).position.x, transform.position.y);
+        transform.position = Vector2.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
+        Flip(target.x);
+
+        if (Vector2.Distance(transform.position, target) < 0.1f)
+            movingToB = !movingToB;
+    }
+
+    void GroundChasePlayer()
+    {
+        Vector2 targetPos = new Vector2(player.position.x, transform.position.y);
+        transform.position = Vector2.MoveTowards(transform.position, targetPos, chaseSpeed * Time.deltaTime);
+        Flip(player.position.x);
+
+        if (Vector2.Distance(transform.position, player.position) < stopDistance)
+            StartCoroutine(AttackRoutine());
+    }
+
+    // ========== QUÁI BAY ==========
+    void FlyPatrol()
+    {
+        if (pointA == null || pointB == null) return;
 
         Transform target = movingToB ? pointB : pointA;
         transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-
-        // Xoay theo hướng di chuyển
         Flip(target.position.x);
 
         if (Vector2.Distance(transform.position, target.position) < 0.1f)
-        {
-            movingToB = !movingToB; // Đảo hướng khi đến nơi
-        }
+            movingToB = !movingToB;
     }
 
-    void ChasePlayer()
+    void FlyChasePlayer()
     {
-        // animator.SetBool("isRunning", true);
-
-        // Đuổi theo Player
         transform.position = Vector2.MoveTowards(transform.position, player.position, chaseSpeed * Time.deltaTime);
-
-        // Xoay theo hướng của Player
         Flip(player.position.x);
 
-        // Nếu chạm vào Player thì thực hiện tấn công
         if (Vector2.Distance(transform.position, player.position) < stopDistance)
+            StartCoroutine(AttackRoutine());
+    }
+
+    // ========== CHUNG ==========
+    IEnumerator AttackRoutine()
+    {
+        isAttacking = true;
+
+        // Animation tấn công
+        animator.SetTrigger("Damage");
+        Debug.Log($"{typeEnemy} tấn công Player!");
+
+        yield return new WaitForSeconds(0.2f); // delay đánh trúng (nếu có hitbox thì để ở đây)
+
+        // Lùi lại sau khi tấn công
+        float retreatTime = 0.4f;
+        float retreatDistance = 2f;
+
+        Vector2 retreatDirection;
+
+        if (typeEnemy == TypeEnemy.Quaidoi)
         {
-            Attack();
+            // Quái bay lùi theo 2D
+            retreatDirection = (transform.position - player.position).normalized;
         }
-    }
+        else
+        {
+            // Quái đất chỉ lùi theo trục X
+            float dirX = Mathf.Sign(transform.position.x - player.position.x); // +1 hoặc -1
+            retreatDirection = new Vector2(dirX, 0);
+        }
 
-    void Attack()
-    {
-        animator.SetTrigger("Attack"); // Gọi animation tấn công
-        Debug.Log("Quái tấn công Player!");
-
-        // Thực hiện sát thương hoặc xử lý va chạm tại đây (gọi hàm từ Player)
-
-        // Dừng di chuyển sau khi tấn công (nếu cần)
-        StartCoroutine(RetreatAfterAttack());
-    }
-    IEnumerator RetreatAfterAttack()
-    {
-        float retreatTime = 0.3f; // Thời gian để lùi
-        float retreatDistance = 3f; // Khoảng cách lùi (~2 pixel)
-
-        Vector2 retreatDirection = (transform.position - player.position).normalized; // Hướng lùi
-        Vector2 retreatTarget = (Vector2)transform.position + retreatDirection * retreatDistance; // Vị trí cần lùi đến
+        Vector2 retreatTarget = (Vector2)transform.position + retreatDirection * retreatDistance;
 
         float elapsedTime = 0;
         while (elapsedTime < retreatTime)
@@ -116,12 +159,15 @@ public class EnemyAI : MonoBehaviour
             yield return null;
         }
 
-        yield return new WaitForSeconds(0.3f); // Chờ 0.3 giây trước khi tấn công tiếp
+        // Chờ 0.5s rồi mới tấn công tiếp
+        yield return new WaitForSeconds(0.5f);
+        isAttacking = false;
     }
-
 
     bool IsPlayerBetweenAandB()
     {
+        if (pointA == null || pointB == null) return false;
+
         float minX = Mathf.Min(pointA.position.x, pointB.position.x);
         float maxX = Mathf.Max(pointA.position.x, pointB.position.x);
 
@@ -130,14 +176,12 @@ public class EnemyAI : MonoBehaviour
 
     void Flip(float targetX)
     {
-        // Nếu quái đang nhìn bên phải nhưng Player ở bên trái => Quay lại
         if ((targetX < transform.position.x && transform.localScale.x < 0) ||
             (targetX > transform.position.x && transform.localScale.x > 0))
         {
             Vector3 newScale = transform.localScale;
-            newScale.x *= -1; // Đảo hướng
+            newScale.x *= -1;
             transform.localScale = newScale;
         }
     }
-
 }

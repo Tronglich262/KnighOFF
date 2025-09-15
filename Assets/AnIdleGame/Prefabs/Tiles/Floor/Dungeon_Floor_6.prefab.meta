@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ee846d22a6d0e054594e92c6c0d34c04
+timeCreated: 1433651808
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 37495
+  packageName: An Idle Game
+  packageVersion: 1.0
+  assetPath: Assets/AnIdleGame/Prefabs/Tiles/Floor/Dungeon_Floor_6.prefab
+  uploadId: 70484

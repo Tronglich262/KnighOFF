@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 39bb73a92d8a3e248bc3d224c09fbe8c
+timeCreated: 1431344068
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 37495
+  packageName: An Idle Game
+  packageVersion: 1.0
+  assetPath: Assets/AnIdleGame/Animations/DamagePopup/DamagePopup.anim
+  uploadId: 70484

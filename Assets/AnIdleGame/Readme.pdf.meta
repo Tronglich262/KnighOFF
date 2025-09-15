@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f98c253105bc75e4db4de43413dec0d9
+timeCreated: 1432278730
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 37495
+  packageName: An Idle Game
+  packageVersion: 1.0
+  assetPath: Assets/AnIdleGame/Readme.pdf
+  uploadId: 70484

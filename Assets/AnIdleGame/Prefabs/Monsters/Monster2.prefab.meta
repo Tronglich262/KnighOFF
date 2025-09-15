@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f8b49e03b13654f428c535d0d316e9cd
+timeCreated: 1434860750
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 37495
+  packageName: An Idle Game
+  packageVersion: 1.0
+  assetPath: Assets/AnIdleGame/Prefabs/Monsters/Monster2.prefab
+  uploadId: 70484
