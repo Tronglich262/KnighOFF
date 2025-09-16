@@ -9,10 +9,12 @@ public class mouse : MonoBehaviour
     private bool isActive = true; // Trạng thái hiện tại
     public bool CheckScrip = false;
     public GameObject pcsetting;
+    public bool typeSetting = true;
     private void Start()
     {
         // Gán sự kiện bấm vào button
         GetComponent<Button>().onClick.AddListener(ToggleActive);
+      
     }
 
     private void ToggleActive()
@@ -43,6 +45,7 @@ public class mouse : MonoBehaviour
         {
             playerScript.enabled = isActive;
         }
+      
     }
 
 }
