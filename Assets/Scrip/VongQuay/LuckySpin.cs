@@ -59,9 +59,11 @@ public class LuckySpin : MonoBehaviour
             cell.iconImage.color = normalColor;
         winner.iconImage.color = Color.green;
 
-        // Gửi dữ liệu sang panel kết quả
         if (resultPanel != null)
-            resultPanel.ShowResult(winner.icon, winner.text);
+        {
+            PhanThuong reward = winner.GetComponent<PhanThuong>();
+            resultPanel.ShowResult(winner.icon, winner.text, reward);
+        }
 
         isSpinning = false;
     }

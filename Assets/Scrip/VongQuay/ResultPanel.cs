@@ -7,7 +7,7 @@ public class ResultPanel : MonoBehaviour
     [Header("Prefab và nơi chứa")]
     public GameObject resultPrefab;   // Prefab panel kết quả
 
-    public void ShowResult(Sprite icon, string text)
+    public void ShowResult(Sprite icon, string text, PhanThuong phanThuong)
     {
         if (resultPrefab == null)
         {
@@ -21,6 +21,7 @@ public class ResultPanel : MonoBehaviour
         // Gán icon và text (tìm theo tên con)
         Image iconImg = go.transform.Find("new/Panel/Icon")?.GetComponent<Image>();
         TextMeshProUGUI txt = go.transform.Find("new/Panel/Text")?.GetComponent<TextMeshProUGUI>();
+        Button claimBtn = go.transform.Find("new/Panel/ClaimButton")?.GetComponent<Button>();
 
         if (iconImg != null)
             iconImg.sprite = icon;
@@ -29,6 +30,13 @@ public class ResultPanel : MonoBehaviour
 
         if (txt != null)
             txt.text = text;
+        if (claimBtn != null)
+        {
+            // Xóa listener cũ rồi add mới
+            claimBtn.onClick.RemoveAllListeners();
+            claimBtn.onClick.AddListener(() => phanThuong.NhanThuong());
+            claimBtn.onClick.AddListener(() => Destroy(go)); // đóng panel sau khi nhận
+        }
         else
             Debug.LogWarning("Không tìm thấy 'Text' trong prefab!");
 
@@ -39,5 +47,4 @@ public class ResultPanel : MonoBehaviour
             ActiveVongQuay.instance.OpenSpin();
         }
     }
-    public void Close() => resultPrefab.SetActive(false);
 }

@@ -6,6 +6,12 @@ public class Coin : MonoBehaviour
     public int coinValue = 5; // Giá trị của coin
     public AudioSource coinAudioPrefab; // Prefab chứa AudioSource có sẵn clip
 
+
+
+    /// <summary>
+    /// Xử lý khi người chơi chạm vào coin
+    /// </summary>
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))

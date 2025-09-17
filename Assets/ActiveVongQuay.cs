@@ -29,6 +29,10 @@ public class ActiveVongQuay : MonoBehaviour
     {
         
     }
+
+    /// <summary>
+    /// active
+    /// </summary>
     public void ActiveSpin() => spin.SetActive(true);
 
     public void CLoseSpin1() => spin.SetActive(false);

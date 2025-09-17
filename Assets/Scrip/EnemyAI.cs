@@ -75,6 +75,10 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Tự di chuyển giữa a và B  , focus player trục X và tấn công khi gần
+    /// </summary>
+
     // ========== QUÁI DƯỚI ĐẤT ==========
     void GroundPatrol(float moveSpeed)
     {
@@ -98,6 +102,10 @@ public class EnemyAI : MonoBehaviour
             StartCoroutine(AttackRoutine());
     }
 
+
+    /// <summary>
+    /// đi chuyển giữa A và B , bay theo 2D và tấn công khi
+    /// </summary>
     // ========== QUÁI BAY ==========
     void FlyPatrol()
     {
@@ -119,6 +127,11 @@ public class EnemyAI : MonoBehaviour
         if (Vector2.Distance(transform.position, player.position) < stopDistance)
             StartCoroutine(AttackRoutine());
     }
+
+
+    /// <summary>
+    /// attack player ( tính năng chung của 2 loại quái ) tấn công xong lùi lại 1 đoạn rồi mới tấn công tiếp
+    /// </summary>
 
     // ========== CHUNG ==========
     IEnumerator AttackRoutine()

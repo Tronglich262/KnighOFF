@@ -5,7 +5,9 @@ using UnityEngine.UI;
 public class Player1 : MonoBehaviour
 {
     public float moveSpeed = 10f;
-    public float jumpForce = 25f;
+    [SerializeField ]public float jumpForce = 35f;
+    public float jumpgoc;
+    public float jumnew;
     public Transform groundCheck;
     public LayerMask groundLayer;
 
@@ -54,6 +56,7 @@ public class Player1 : MonoBehaviour
 
     void Start()
     {
+        jumnew = jumpForce;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
@@ -120,7 +123,24 @@ public class Player1 : MonoBehaviour
         jumpButton.interactable = false;
         //Invoke(nameof(ResetJumpCooldown), jumpCooldown);
     }
-
+    private void OnEnable()
+    {
+        PhanThuong.OnThuong += bufjumpforce;
+    }
+    private void OnDisable()
+    {
+        PhanThuong.OnThuong -= bufjumpforce;
+    }
+    private void bufjumpforce()
+    {
+        jumpForce += 10f;
+        CancelInvoke(nameof(resetjump)); // nếu đang có buff, reset timer lại
+        Invoke(nameof(resetjump), 10f);  // sau 10s sẽ về lại gốc
+    }
+    public void resetjump()
+    {
+        jumpForce = jumnew;
+    }
     void ResetJumpCooldown()
     {
         canJump = true;
@@ -287,5 +307,7 @@ public class Player1 : MonoBehaviour
                 jumpCooldownPanel.gameObject.SetActive(false);
             }
         }
+
+
     }
 }

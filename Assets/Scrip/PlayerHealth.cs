@@ -24,6 +24,18 @@ public class PlayerHealth : MonoBehaviour
     public AudioClip deathClip;
     public AudioClip sao;
     private AudioSource audioSource;      // Component phát âm thanh
+    public static PlayerHealth instance;
+    public void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -141,6 +153,21 @@ public class PlayerHealth : MonoBehaviour
         if (player != null)
         {
             player.TriggerBuffAnimation();
+        }
+    }
+    private void OnEnable()
+    {
+        PhanThuong.OnThuongHp += healTime;
+    }
+    private void OnDisable()
+    {
+        PhanThuong.OnThuongHp -= healTime;
+    }
+    public void healTime()
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            IncreaseHealth(10);
         }
     }
     public bool IsHealthFull()

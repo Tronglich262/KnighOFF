@@ -6,7 +6,8 @@ using TMPro;
 public class Player : MonoBehaviour
 {
     public float moveSpeed = 10f;
-    public float jumpForce = 25f;
+    [SerializeField]public float jumpForce = 35f;
+    public float jumpmoi;
     public Transform groundCheck;
     public LayerMask groundLayer;
     private Rigidbody2D rb;
@@ -84,6 +85,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+       jumpmoi = jumpForce;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
@@ -142,6 +144,24 @@ public class Player : MonoBehaviour
         jumpCooldownText.gameObject.SetActive(true);
         jumpCooldownPanel.gameObject.SetActive(true);
         jumpButton.interactable = false;
+    }
+    private void OnEnable()
+    {
+        PhanThuong.OnThuong += bufjumpforce;
+    }
+    void bufjumpforce()
+    {
+        jumpForce += 10f;
+        CancelInvoke(nameof(resetjump)); // nếu đang có buff, reset timer lại
+        Invoke(nameof(resetjump), 10f);  // sau 10s sẽ về lại gốc
+    }
+    private void OnDisable()
+    {
+        PhanThuong.OnThuong -= bufjumpforce;
+    }
+    public void resetjump()
+    {
+        jumpForce = jumpmoi;
     }
 
     void StopJump()

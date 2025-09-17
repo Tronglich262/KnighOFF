@@ -23,6 +23,9 @@ public class Wake : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    /// <summary>
+    /// destroy dữ liệu khi về menu
+    /// </summary>
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "Menu")

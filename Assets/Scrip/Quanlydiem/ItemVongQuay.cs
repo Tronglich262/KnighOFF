@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class ItemVongQuay : MonoBehaviour
 {
+    [Header("Item Data")]
     public Sprite icon;
     public string text;
 
