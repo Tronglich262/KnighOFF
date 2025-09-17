@@ -5,11 +5,13 @@ using UnityEngine.UI;
 
 public class LuckySpin : MonoBehaviour
 {
-    public List<Button> cells;          // List các ô (Button)
+    public List<ItemVongQuay> cells;  // danh sách các ô (ItemVongQuay)
     public Color normalColor = Color.white;
     public Color highlightColor = Color.yellow;
 
     public Button spinButton;
+    public ResultPanel resultPanel;   // tham chiếu tới panel kết quả
+
     private bool isSpinning = false;
 
     void Start()
@@ -33,29 +35,33 @@ public class LuckySpin : MonoBehaviour
 
         for (int i = 0; i < totalSteps; i++)
         {
-            // Reset màu tất cả
+            // reset màu tất cả
             foreach (var cell in cells)
-                cell.image.color = normalColor;
+                cell.iconImage.color = normalColor;
 
-            // Highlight ô hiện tại
-            cells[index].image.color = highlightColor;
+            // highlight ô hiện tại
+            cells[index].iconImage.color = highlightColor;
 
-            // Tăng index
             index = (index + 1) % cells.Count;
 
-            // Delay và tăng dần thời gian để tạo hiệu ứng chậm lại
             yield return new WaitForSeconds(delay);
             delay += 0.01f;
         }
 
-        // Ô trúng thưởng chính là ô trước khi index ++
+        // Lấy ô trúng thưởng
         int finalIndex = (index - 1 + cells.Count) % cells.Count;
-        Debug.Log("Dừng tại ô: " + finalIndex);
+        ItemVongQuay winner = cells[finalIndex];
 
-        // Đổi màu ô cuối để giữ highlight
+        Debug.Log("Dừng tại ô: " + winner.text);
+
+        // reset màu và giữ highlight ô thắng
         foreach (var cell in cells)
-            cell.image.color = normalColor;
-        cells[finalIndex].image.color = Color.green;
+            cell.iconImage.color = normalColor;
+        winner.iconImage.color = Color.green;
+
+        // Gửi dữ liệu sang panel kết quả
+        if (resultPanel != null)
+            resultPanel.ShowResult(winner.icon, winner.text);
 
         isSpinning = false;
     }

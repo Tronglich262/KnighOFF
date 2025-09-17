@@ -1,9 +1,21 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ActiveVongQuay : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public GameObject spin;
+    public static ActiveVongQuay instance;
+    public void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
         if(spin != null)
@@ -17,8 +29,14 @@ public class ActiveVongQuay : MonoBehaviour
     {
         
     }
-    public void ActiveSpin()
-    {
-       spin.SetActive(!spin.activeSelf);
-    }
+    public void ActiveSpin() => spin.SetActive(true);
+
+    public void CLoseSpin1() => spin.SetActive(false);
+
+
+    //active singleton pattern  ( liên kết tới spin)
+    public void CloseSpin() => spin.SetActive(false);
+
+    public void OpenSpin() => spin.SetActive(true);
+
 }
