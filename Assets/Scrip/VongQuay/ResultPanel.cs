@@ -6,7 +6,7 @@ public class ResultPanel : MonoBehaviour
 {
     [Header("Prefab và nơi chứa")]
     public GameObject resultPrefab;   // Prefab panel kết quả
-
+    public AudioClip spawnSound;
     public void ShowResult(Sprite icon, string text, PhanThuong phanThuong)
     {
         if (resultPrefab == null)
@@ -17,6 +17,11 @@ public class ResultPanel : MonoBehaviour
 
         // Tạo mới prefab làm con của parent
         GameObject go = Instantiate(resultPrefab, transform.position, Quaternion.identity);
+        //  Thêm AudioSource và phát âm thanh
+        AudioSource audio = go.AddComponent<AudioSource>();
+        audio.playOnAwake = false;
+        audio.clip = spawnSound;
+        audio.Play();
 
         // Gán icon và text (tìm theo tên con)
         Image iconImg = go.transform.Find("new/Panel/Icon")?.GetComponent<Image>();

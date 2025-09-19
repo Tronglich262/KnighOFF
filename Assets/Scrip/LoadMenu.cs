@@ -1,11 +1,18 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class LoadMenu : MonoBehaviour
 {
     public GameObject menu;
     public GameObject setting;
     public GameObject help;
-    
+
+    [Header("button")]
+    public GameObject playegame;
+    public GameObject settinggame;
+    public GameObject helpgame;
+    public GameObject quitgame;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,24 +39,24 @@ public class LoadMenu : MonoBehaviour
 
     public void ToggleMenu()
     {
-        menu.SetActive(!menu.activeSelf);
         setting.SetActive(true);
+        dissactiveallbtn();
     } 
     public void HelpMenu()
     {
-        menu.SetActive(!menu.activeSelf);
         help.SetActive(true);
+        dissactiveallbtn();
     }
 
     public void BackMenu()
     {
-        menu.SetActive(!menu.activeSelf);
         setting.SetActive(false);
+        activeallbtn();
     }
     public void HelpBackMenu()
     {
-        menu.SetActive(!menu.activeSelf);
         help.SetActive(false);
+        activeallbtn();
     }
     public void QuitGame()
     {
@@ -57,6 +64,19 @@ public class LoadMenu : MonoBehaviour
     }
 
 
-
+    public void activeallbtn()
+    {
+        playegame.SetActive(true);
+        settinggame.SetActive(true);
+        helpgame.SetActive(true);
+        quitgame.SetActive(true);
+    }
+    public void dissactiveallbtn()
+    {
+        playegame.SetActive(false);
+        settinggame.SetActive(false);
+        helpgame.SetActive(false);
+        quitgame.SetActive(false);
+    }
 
 }
