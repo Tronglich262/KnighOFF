@@ -19,7 +19,7 @@ public class IntroCamera : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(deleythamquan());
+        StartCoroutine(WaitForPlayerThenIntro());
     }
 
     IEnumerator deleythongbao()
@@ -33,17 +33,7 @@ public class IntroCamera : MonoBehaviour
         player.GetComponent<Player1>().enabled = true;
         ActiveSkillAndMenu.instance.unactivebtnall();
     }
-    IEnumerator deleythamquan()
-    {
-      
-        ActiveSkillAndMenu.instance.activebtnall();
-        yield return new WaitForSeconds(0.5f);
-        ThamquanMap.SetActive(true);
-        yield return new WaitForSeconds(2f);
-        ThamquanMap.SetActive(false);
-        StartCoroutine(WaitForPlayerThenIntro());
-
-    }
+    
 
     IEnumerator WaitForPlayerThenIntro()
     {
@@ -58,6 +48,11 @@ public class IntroCamera : MonoBehaviour
             offset = transform.position - player.transform.position;
             player.GetComponent<Player>().enabled = false;
             player.GetComponent<Player1>().enabled = false;
+            ActiveSkillAndMenu.instance.activebtnall();
+            yield return new WaitForSeconds(0.5f);
+            ThamquanMap.SetActive(true);
+            yield return new WaitForSeconds(2f);
+            ThamquanMap.SetActive(false);
         }
 
         yield return StartCoroutine(PlayIntro());
