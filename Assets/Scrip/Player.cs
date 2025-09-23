@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
     public float jumpCooldown = 1f;
     public float attackCooldown = 1f;
     public float shieldCooldown = 2f;
-    public float buffCooldown = 3f;
+    public float buffCooldown = 10f;
 
     private bool canJump = true;
     private bool canAttack = true;
@@ -214,6 +214,7 @@ public class Player : MonoBehaviour
         if (!canUseBuff) return;
 
         animator.SetBool("buff", true);
+        PlayerHealth.instance.IncreaseHealth(20); // Gọi hàm hồi máu
         Invoke(nameof(StopBuffAnimation), 1f);
 
         canUseBuff = false;

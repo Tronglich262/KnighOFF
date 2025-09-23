@@ -36,7 +36,7 @@ public class Player1 : MonoBehaviour
 
     public float kiemCooldown = 1f;
     public float khienCooldown = 2f;
-    public float hoimauCooldown = 3f;
+    public float hoimauCooldown = 10f;
     public float jumpCooldown = 1f;
 
     private bool canUseKiem = true;
@@ -202,6 +202,7 @@ public class Player1 : MonoBehaviour
         if (!canUseHoiMau) return;
 
         animator?.SetBool("buff", true);
+        PlayerHealth.instance.IncreaseHealth(20); // Gọi hàm hồi máu
         Invoke(nameof(StopBuffAnimation), 1f);
 
         canUseHoiMau = false;
