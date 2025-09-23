@@ -1,20 +1,32 @@
-﻿using Unity.Jobs;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class mouse : MonoBehaviour
 {
     public GameObject[] otherButtons; // 5 button cần ẩn/hiện
-    public Player1 playerScript; // Script Player cần bật/tắt
-    private bool isActive = true; // Trạng thái hiện tại
-    public bool CheckScrip = false;
+    public Player1 playerScript;      // Script Player cần bật/tắt
+    private bool isActive = true;     // Trạng thái hiện tại
     public GameObject pcsetting;
-    public bool typeSetting = true;
+
+    [Header("Trạng thái check")]
+    public bool checkSetting  
+    {
+        get
+        {
+            return pcsetting != null && pcsetting.activeSelf;
+        }
+    }
+
+    public static mouse Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
-        // Gán sự kiện bấm vào button
         GetComponent<Button>().onClick.AddListener(ToggleActive);
-      
     }
 
     private void ToggleActive()
@@ -35,7 +47,6 @@ public class mouse : MonoBehaviour
             }
         }
 
-        // Nếu có bất kỳ button nào đang tắt → bật pcsetting
         if (pcsetting != null)
         {
             pcsetting.SetActive(anyButtonInactive);
@@ -45,7 +56,5 @@ public class mouse : MonoBehaviour
         {
             playerScript.enabled = isActive;
         }
-      
     }
-
 }

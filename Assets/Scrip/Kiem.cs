@@ -60,13 +60,14 @@ public class Kiem : MonoBehaviour
             Vector3 spawnPos = other.transform.position + new Vector3(0, 1, 0);
             Instantiate(damageTextPrefab, spawnPos, Quaternion.identity).GetComponent<DamagePopup>().Setup(damage);
 
-            Enemy enemy = other.GetComponent<Enemy>();
-            if (enemy != null)
+            EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
             {
-                Destroy(other.gameObject);
+                enemyHealth.TakeDamage(damage); // trừ máu đúng con bị chém
             }
 
             Debug.Log("Chém trúng quái!");
         }
     }
+
 }

@@ -25,15 +25,43 @@ public class HieuUngVongQuay : MonoBehaviour
 
 
     [Header("Time buff tia set")]
-    public float timetiaset = 5f;
+    public float timetiaset = 10f;
     public float timetiaset1 = 10f;
-    public float timetiaset2 = 15f;
+    public float timetiaset2 = 10f;
+
+    [Header("Time sat thuong")]
+    public GameObject satthuong;
+    public float timest = 10f;
+    public float currentTimess;
+    public TextMeshProUGUI sttext;
+
+    [Header("Cỏ may mắn ( thêm 1 mạng / cỏ ")]
+    public GameObject Comayman;
+    public TextMeshProUGUI textcomayman;
+    public int mangthem = 0;
+    
+
+
+
+    public static HieuUngVongQuay instance;
+    public void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
 
     void Start()
     {
         currentTimespeedbuff = timespeed;
         currentTimehpbuff = timehp;
+        currentTimess = timest;
     }
 
     // Update is called once per frame
@@ -89,6 +117,8 @@ public class HieuUngVongQuay : MonoBehaviour
     /// <summary>
     /// tia set
     /// </summary>
+    
+    //năng lượng vàng ( tăng coin nhận vào gấp 5 lần trong 5s )
     public void TiaSetBuff()
     {
         StartCoroutine(deleyTime());
@@ -106,6 +136,9 @@ public class HieuUngVongQuay : MonoBehaviour
 
         tiaSet.SetActive(false);
     }
+
+
+    //năng lượng đen ( tăng chống chịu 5s)
     public void TiaSetBuff1()
     {
         StartCoroutine(deleyTime1());
@@ -123,6 +156,8 @@ public class HieuUngVongQuay : MonoBehaviour
 
         tiaSet1.SetActive(false);
     }
+
+    //năng lượng đỏ ( bất tử 5s )
     public void TiaSetBuff2()
     {
         StartCoroutine(deleyTime2());
@@ -142,6 +177,44 @@ public class HieuUngVongQuay : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// buff sat thuong vong quay
+    /// </summary>
+    public void satthuongbuff()
+    {
+        StartCoroutine(STBuffCountdown());
+    }
+    public IEnumerator STBuffCountdown()
+    {
+        satthuong.SetActive(true);
+        currentTimess = timest;
+        while (currentTimess > 0)
+        {
+            currentTimess -= Time.deltaTime;
+            sttext.text = currentTimess.ToString("F1") + "s";
+            yield return null; // chờ frame tiếp theo
+        }
+        satthuong.SetActive(false);
+    }
+
+    /// <summary>
+    /// Cỏ may mắn them mạn
+    /// </summary>
+    public void Comaymanbuff()
+    {
+      Comayman.SetActive(true);
+        mangthem += 1;
+      textcomayman.text = $"{mangthem} mạng";
+    }
+    public void UpdateTextCo()
+    {
+       textcomayman.text = $"{mangthem} mạng";
+        if(mangthem <= 0)
+        {
+            Comayman.SetActive(false);
+        }
+    }
+
     private void OnEnable()
     {
         PhanThuong.OnThuong += SpeedBuff;
@@ -149,6 +222,8 @@ public class HieuUngVongQuay : MonoBehaviour
         PhanThuong.OnThuongTiaset += TiaSetBuff;
         PhanThuong.OnThuongTiaset1 += TiaSetBuff1;
         PhanThuong.OnThuongTiaset2 += TiaSetBuff2;
+        PhanThuong.sathuongbuff += satthuongbuff;
+        PhanThuong.comaymanbuff += Comaymanbuff;
     }
     private void OnDisable()
     {
@@ -157,6 +232,8 @@ public class HieuUngVongQuay : MonoBehaviour
         PhanThuong.OnThuongTiaset -= TiaSetBuff;
         PhanThuong.OnThuongTiaset1 -= TiaSetBuff1;
         PhanThuong.OnThuongTiaset2 -= TiaSetBuff2;
+        PhanThuong.sathuongbuff -= satthuongbuff;
+        PhanThuong.comaymanbuff -= Comaymanbuff;
 
     }
 }

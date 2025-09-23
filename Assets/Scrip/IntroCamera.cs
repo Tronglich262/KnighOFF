@@ -29,8 +29,20 @@ public class IntroCamera : MonoBehaviour
         yield return new WaitForSeconds(2f);
         imagethongbao.SetActive(false);
 
-        player.GetComponent<Player>().enabled = true;
-        player.GetComponent<Player1>().enabled = true;
+        if (mouse.Instance != null && mouse.Instance.checkSetting)
+        {
+            //  pcsetting đang mở
+            player.GetComponent<Player>().enabled = true;
+            player.GetComponent<Player1>().enabled = true;
+        }
+        else
+        {
+            //  pcsetting tắt hoặc mouse.Instance chưa tồn tại
+            player.GetComponent<Player>().enabled = true;   // Player được bật
+            player.GetComponent<Player1>().enabled = false; // Player1 bị tắt
+        }
+
+
         ActiveSkillAndMenu.instance.unactivebtnall();
     }
     

@@ -26,4 +26,12 @@ public class AudioSettingsManager : MonoBehaviour
 
         PlayerPrefs.SetFloat(MusicVolumeKey, value);
     }
+    public void SpeedGame2()
+    {
+               Time.timeScale = 2f;
+    }
+    public void SpeedGame1()
+    {
+               Time.timeScale = 1f;
+    }
 }

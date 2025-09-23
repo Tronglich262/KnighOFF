@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BossHealth : MonoBehaviour
@@ -12,11 +13,21 @@ public class BossHealth : MonoBehaviour
     public Vector3 offset = new Vector3(0, 2f, 0); // Điều chỉnh vị trí thanh máu
     private Animator animator;
     public GameObject congchua;
+    private ScoreManager scoreManager;
+
+
+    [Header("Dame vong quay buff")]
+    public float takedame = 10f;
+    public float damebuff = 20f;
+    public float currenttakedame;
     void Start()
     {
+        currenttakedame = takedame;
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;  // Bắt đầu với full máu
         UpdateHealthBar();
+        scoreManager = FindObjectOfType<ScoreManager>();
+
     }
 
     void Update()
@@ -39,7 +50,7 @@ public class BossHealth : MonoBehaviour
     IEnumerator Mau()
     {
         animator.SetBool("Damaged", true);  // Gọi animation bị đánh
-        TakeDamage(10); // Trừ máu
+        TakeDamage(currenttakedame); // Trừ máu
         yield return new WaitForSeconds(0.5f); // Thời gian bị đánh
         animator.SetBool("Damaged", false);
 
@@ -68,6 +79,7 @@ public class BossHealth : MonoBehaviour
     void Die()
     {
         Debug.Log("Boss bị tiêu diệt!");
+        scoreManager.AddScore(Random.Range(50, 200));
         StartCoroutine(DelayDie());
         congchua.SetActive(true); // Hiện công chúa khi Boss chết
     }
@@ -84,6 +96,29 @@ public class BossHealth : MonoBehaviour
         }
     
         Destroy(gameObject); // Xóa Boss sau khi animation kết thúc
+    }
+
+    ///<summary>
+    /// buff dame từ vong quay
+    ///</summary>
+    
+    public void BuffDameQuay()
+    {
+        StartCoroutine(buffdamequaboss());
+    }
+    IEnumerator buffdamequaboss()
+    {
+        currenttakedame = damebuff + takedame;
+        yield return new WaitForSeconds(10f);
+        currenttakedame = takedame;
+    }
+    private void OnEnable()
+    {
+       PhanThuong.sathuongbuff += BuffDameQuay;
+    }
+    private void OnDisable()
+    {
+        PhanThuong.sathuongbuff -= BuffDameQuay;
     }
 
 }

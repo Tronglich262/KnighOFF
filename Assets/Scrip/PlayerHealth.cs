@@ -84,7 +84,7 @@ public class PlayerHealth : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             StartCoroutine(Hit());
-            TakeDamage(2);
+           // TakeDamage(2);
         }
     }
 
@@ -104,28 +104,38 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
-        if (isDead) return;
+        if (isDead) return; 
 
+        if (HieuUngVongQuay.instance.mangthem > 0)
+        {
+            HieuUngVongQuay.instance.mangthem--;
+            HieuUngVongQuay.instance.UpdateTextCo();
+            Debug.Log("Số mạng còn lại: " + HieuUngVongQuay.instance.mangthem);
+            currentHealth = maxHealth;
+            UpdateHealthUI();
+
+
+            return; 
+        }
         isDead = true;
-
         Debug.Log("Người chơi đã chết!");
 
-        // Dừng mọi hoạt động vật lý
-        GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
-        GetComponent<Rigidbody2D>().simulated = false;
+
+        var rb = GetComponent<Rigidbody2D>();
+        rb.linearVelocity = Vector2.zero;
+        rb.simulated = false;
         GetComponent<Collider2D>().enabled = false;
 
-        // Phát âm thanh chết (dùng PlayOneShot để không cần gán clip trước)
+
+        // Phát âm thanh chết
         if (audioSource != null && deathClip != null)
         {
             audioSource.PlayOneShot(deathClip);
         }
-
-        // Animation chết
         animator.SetBool("Die", true);
-
         StartCoroutine(ResetGame());
     }
+
 
 
     void UpdateHealthUI()

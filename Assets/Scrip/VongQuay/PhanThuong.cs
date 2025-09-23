@@ -20,6 +20,8 @@ public class PhanThuong : MonoBehaviour
     public static event thuong OnThuongTiaset;
     public static event thuong OnThuongTiaset1;
     public static event thuong OnThuongTiaset2;
+    public static event thuong sathuongbuff;
+    public static event thuong comaymanbuff;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public PhanThuongType phanThuongType;
     void Start()
@@ -58,12 +60,16 @@ public class PhanThuong : MonoBehaviour
                 OnThuongTiaset2?.Invoke();
                 break;
             case PhanThuongType.o4:
+                comaymanbuff?.Invoke();
                 break;
             case PhanThuongType.o3:
+                //quang cao
                 break;
             case PhanThuongType.o2:
+                sathuongbuff?.Invoke();
                 break;
             case PhanThuongType.o1:
+                // chúc may mắn lần sau
                 break;
         }
     }

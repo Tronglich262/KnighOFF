@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System;
+using System.Collections;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -10,6 +11,12 @@ public class ScoreManager : MonoBehaviour
 
     public event Action OnScoreChanged; // Sự kiện khi điểm thay đổi
 
+
+    [Header("Coin Multiplier")]
+    public int coinMultiplier = 1;
+    public int CoinMultiplierx5 = 5;
+    public int currencoin;
+   
     private void Awake()
     {
         if (Instance == null)
@@ -26,12 +33,13 @@ public class ScoreManager : MonoBehaviour
 
     void Start()
     {
+        currencoin = coinMultiplier;
         UpdateScoreUI(); // Hiển thị điểm ngay lập tức khi vào game
     }
 
     public void AddScore(int amount)
     {
-        currentScore += amount;
+        currentScore += amount * currencoin;
         SaveScore();
     }
 
@@ -87,6 +95,8 @@ public class ScoreManager : MonoBehaviour
     void OnEnable()
     {
         LoadScore(); // Đảm bảo điểm hiển thị ngay khi Scene mới tải
+        PhanThuong.OnThuongTiaset += StartCoinX5;
+
     }
     public int resetScore()
     {
@@ -98,4 +108,23 @@ public class ScoreManager : MonoBehaviour
     {
         resetScore();
     }
+
+    //vòng quay x5 coin
+    IEnumerator CoinX5()
+    {
+        currencoin = CoinMultiplierx5;
+        yield return new WaitForSeconds(5f);
+        currencoin = coinMultiplier;
+
+    }
+    public void StartCoinX5()
+    {
+        StartCoroutine(CoinX5());
+    }
+
+    private void OnDisable()
+    {
+        PhanThuong.OnThuongTiaset -= StartCoinX5;
+    }
+
 }
