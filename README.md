@@ -1,4 +1,4 @@
-<img width="889" height="497" alt="image" src="https://github.com/user-attachments/assets/0c6879e6-bc42-4b0c-8eb3-bc4f0c503286" /># 👑 Action Adventure RPG – Rescue the Princess
+👑 Action Adventure RPG – Rescue the Princess
 
 ## 🎮 Giới thiệu
 Action Adventure RPG là một game **Action / RPG** được phát triển bằng **Unity**.  
