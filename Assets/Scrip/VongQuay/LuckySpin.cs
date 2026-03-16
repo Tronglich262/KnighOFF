@@ -8,11 +8,11 @@ using UnityEngine.UI;
 public class LuckySpin : MonoBehaviour
 {
     [Header("Cấu hình vòng quay")]
-    public List<ItemVongQuay> cells;  // danh sách các ô (ItemVongQuay)
+    public List<ItemVongQuay> cells;  
     public Color normalColor = Color.white;
     public Color highlightColor = Color.yellow;
     public Button spinButton;
-    public ResultPanel resultPanel;   // tham chiếu tới panel kết quả
+    public ResultPanel resultPanel;   
 
     [Header("UI Components")]
     public TextMeshProUGUI TextVongQuay;
@@ -58,8 +58,8 @@ public class LuckySpin : MonoBehaviour
         isSpinning = true;
         Userpin();
         int index = 0;
-        int totalSteps = Random.Range(20, 40);  // số bước chạy ngẫu nhiên
-        float delay = 0.05f;                    // tốc độ ban đầu
+        int totalSteps = Random.Range(20, 40);  
+        float delay = 0.05f;                    
 
         for (int i = 0; i < totalSteps; i++)
         {

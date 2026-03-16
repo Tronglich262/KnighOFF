@@ -23,7 +23,7 @@ public class PlayerHealth : MonoBehaviour
     public Image huyhieutot;
     public AudioClip deathClip;
     public AudioClip sao;
-    private AudioSource audioSource;      // Component phát âm thanh
+    private AudioSource audioSource;     
     public static PlayerHealth instance;
     public void Awake()
     {
@@ -59,7 +59,7 @@ public class PlayerHealth : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (isDead) return; // Nếu đã chết thì không nhận sát thương
+        if (isDead) return; 
         if (collision.gameObject.CompareTag("Dinh"))
         {
             StartCoroutine(Hit());
@@ -69,8 +69,7 @@ public class PlayerHealth : MonoBehaviour
 
     IEnumerator Hit()
     {
-        if (isDead) yield break; // Nếu đã chết thì không chạy animation bị đánh
-
+        if (isDead) yield break; 
         animator.SetBool("Hit", true);
         yield return new WaitForSeconds(0.2f);
         animator.SetBool("Hit", false);
@@ -78,7 +77,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (isDead) return; // Nếu đã chết thì không nhận sát thương
+        if (isDead) return; 
 
       
         if (other.gameObject.CompareTag("Enemy"))
@@ -90,7 +89,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (isDead) return; // Nếu đã chết thì không trừ máu
+        if (isDead) return; 
 
         currentHealth -= damage;
         UpdateHealthUI();

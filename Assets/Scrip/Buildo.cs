@@ -1,18 +1,17 @@
 using UnityEngine;
-using UnityEngine.UI; // Import UI để dùng Button
+using UnityEngine.UI; 
 
 public class Buildo : MonoBehaviour
 {
-    public GameObject builddo; // Đối tượng cần hiện
-    public Button openButton;  // Button để mở bảng
+    public GameObject builddo; 
+    public Button openButton;  
 
-    private bool isOpen = false; // Kiểm tra trạng thái
-//lichtrong
+    private bool isOpen = false; 
     void Start()
     {
         if (builddo != null)
         {
-            builddo.SetActive(false); // Ẩn lúc đầu
+            builddo.SetActive(false); 
         }
 
         if (openButton != null)

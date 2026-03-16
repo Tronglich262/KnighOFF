@@ -11,9 +11,9 @@ public class ShopItem : MonoBehaviour
     }
 
     public ItemType itemType;
-    public int itemPrice; // Giá vật phẩm
+    public int itemPrice; 
     public Button buyButton;
-    public GameObject item; // Dùng cho button kích hoạt bản đồ nếu có
+    public GameObject item; 
 
     void Start()
     {
@@ -53,7 +53,7 @@ public class ShopItem : MonoBehaviour
                 case ItemType.ActivateMap:
                     if (item != null)
                     {
-                        item.SetActive(true); // Kích hoạt bản đồ
+                        item.SetActive(true); 
                     }
                     break;
             }

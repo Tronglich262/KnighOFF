@@ -3,15 +3,14 @@ using System.Collections;
 
 public class FireSpawner : MonoBehaviour
 {
-    public GameObject firePrefab; // Prefab ngọn lửa
+    public GameObject firePrefab; 
     public float minSpawnTime = 3f;
     public float maxSpawnTime = 7f;
     public float fireLifetime = 1.5f;
 
-    private float minX = -27f;  // Giới hạn X trái
-    private float maxX = 12f;    // Giới hạn X phải
-    private float spawnY = -7f; // Vị trí Y cố định trên mặt đất
-
+    private float minX = -27f;  
+    private float maxX = 12f;   
+    private float spawnY = -7f; 
     void Start()
     {
         StartCoroutine(SpawnFire());

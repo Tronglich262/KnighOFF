@@ -2,19 +2,7 @@
 
 public class NewMonoBehaviourScript : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public AudioSource coinAudioPrefab; // Prefab chứa AudioSource có sẵn clip
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public AudioSource coinAudioPrefab; 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -28,7 +16,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
                 Destroy(audioInstance.gameObject, audioInstance.clip.length);
             }
 
-            Destroy(gameObject); // Hủy coin ngay sau khi nhặt
+            Destroy(gameObject); 
         }
     }
 

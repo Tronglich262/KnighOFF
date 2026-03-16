@@ -12,16 +12,13 @@ namespace Inventory.UI
         {
             GameObject button = Instantiate(buttonPrefab, transform);
     
-            // Đảm bảo lấy đúng UnityEngine.UI.Button
             Button uiButton = button.GetComponent<Button>();
             if (uiButton != null)
             {
-                Debug.Log($"Button {name} created");  // Log kiểm tra nút đã được tạo
+                Debug.Log($"Button {name} created");  
                 uiButton.onClick.AddListener(() => {
-                    Debug.Log($"Button {name} clicked");  // Log kiểm tra sự kiện có chạy không
+                    Debug.Log($"Button {name} clicked");  
                     onClickAction?.Invoke();
-
-                    // Tắt panel sau khi nhấn nút
                     Toggle(false);
                 });
             }

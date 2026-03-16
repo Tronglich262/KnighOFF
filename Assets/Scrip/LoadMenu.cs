@@ -12,8 +12,6 @@ public class LoadMenu : MonoBehaviour
     public GameObject settinggame;
     public GameObject helpgame;
     public GameObject quitgame;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         if (menu == null)
@@ -24,12 +22,6 @@ public class LoadMenu : MonoBehaviour
         {
             menu.SetActive(true);
         } 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void startgame()

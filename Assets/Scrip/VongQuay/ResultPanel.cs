@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class ResultPanel : MonoBehaviour
 {
     [Header("Prefab và nơi chứa")]
-    public GameObject resultPrefab;   // Prefab panel kết quả
+    public GameObject resultPrefab;  
     public AudioClip spawnSound;
     public void ShowResult(Sprite icon, string text, PhanThuong phanThuong)
     {
@@ -14,8 +14,6 @@ public class ResultPanel : MonoBehaviour
             Debug.LogError("Thiếu resultPrefab hoặc parent trong ResultPanel!");
             return;
         }
-
-        // Tạo mới prefab làm con của parent
         GameObject go = Instantiate(resultPrefab, transform.position, Quaternion.identity);
         //  Thêm AudioSource và phát âm thanh
         AudioSource audio = go.AddComponent<AudioSource>();
@@ -40,7 +38,7 @@ public class ResultPanel : MonoBehaviour
             // Xóa listener cũ rồi add mới
             claimBtn.onClick.RemoveAllListeners();
             claimBtn.onClick.AddListener(() => phanThuong.NhanThuong());
-            claimBtn.onClick.AddListener(() => Destroy(go)); // đóng panel sau khi nhận
+            claimBtn.onClick.AddListener(() => Destroy(go)); 
         }
         else
             Debug.LogWarning("Không tìm thấy 'Text' trong prefab!");

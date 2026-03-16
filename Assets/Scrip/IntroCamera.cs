@@ -15,7 +15,7 @@ public class IntroCamera : MonoBehaviour
     public GameObject imagethongbao;
     public GameObject ThamquanMap;
 
-    private Vector3 offset;  // Will be computed dynamically
+    private Vector3 offset; 
 
     private void Start()
     {
@@ -31,15 +31,14 @@ public class IntroCamera : MonoBehaviour
 
         if (mouse.Instance != null && mouse.Instance.checkSetting)
         {
-            //  pcsetting đang mở
             player.GetComponent<Player>().enabled = true;
             player.GetComponent<Player1>().enabled = true;
         }
         else
         {
             //  pcsetting tắt hoặc mouse.Instance chưa tồn tại
-            player.GetComponent<Player>().enabled = true;   // Player được bật
-            player.GetComponent<Player1>().enabled = false; // Player1 bị tắt
+            player.GetComponent<Player>().enabled = true;   
+            player.GetComponent<Player1>().enabled = false; 
         }
 
 
@@ -56,7 +55,6 @@ public class IntroCamera : MonoBehaviour
         }
         if (player != null)
         {
-            // Compute offset from initial camera/player positions
             offset = transform.position - player.transform.position;
             player.GetComponent<Player>().enabled = false;
             player.GetComponent<Player1>().enabled = false;
@@ -68,8 +66,6 @@ public class IntroCamera : MonoBehaviour
         }
 
         yield return StartCoroutine(PlayIntro());
-
-        // Sau intro thì follow Player
         followPlayer = true;
     }
 

@@ -6,7 +6,7 @@ public class Khien : MonoBehaviour
 {
     public BoxCollider2D swordCollider;
     public Button shieldButton;
-    public Animator playerAnimator; // Thêm Animator của Player (giống Kiem.cs)
+    public Animator playerAnimator; 
 
     private void Start()
     {
@@ -19,7 +19,7 @@ public class Khien : MonoBehaviour
 
         if (playerAnimator == null)
         {
-            playerAnimator = GetComponentInParent<Animator>(); // Nếu Khien là con của Player
+            playerAnimator = GetComponentInParent<Animator>(); 
         }
     }
 
@@ -35,7 +35,7 @@ public class Khien : MonoBehaviour
     {
         if (playerAnimator != null)
         {
-            playerAnimator.SetTrigger("khien"); // Trigger animation
+            playerAnimator.SetTrigger("khien");
         }
         else
         {

@@ -10,7 +10,7 @@ public class Item : MonoBehaviour
     public ItemSO inventoryItem { get; private set; }
 
     [field: SerializeField] public int Quantity { get; set; } = 1;
-    public AudioSource coinAudioPrefab; // Prefab chứa AudioSource có sẵn clip
+    public AudioSource coinAudioPrefab; 
     [SerializeField] private float duration = 0.3f;
 
     private SpriteRenderer spriteRenderer;
@@ -44,7 +44,7 @@ public class Item : MonoBehaviour
         {
             AudioSource audioInstance = Instantiate(coinAudioPrefab, transform.position, Quaternion.identity);
             audioInstance.Play();
-            Destroy(audioInstance.gameObject, audioInstance.clip.length); // Xoá sau khi phát xong
+            Destroy(audioInstance.gameObject, audioInstance.clip.length); 
         }
 
         Vector3 startScale = transform.localScale;

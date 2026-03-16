@@ -9,7 +9,7 @@ public class Kiem : MonoBehaviour
     public GameObject damageTextPrefab;
     public Button attackButton;
 
-    public Animator playerAnimator; // Thêm tham chiếu Animator từ Player
+    public Animator playerAnimator; 
 
     private void Start()
     {
@@ -63,7 +63,7 @@ public class Kiem : MonoBehaviour
             EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage(damage); // trừ máu đúng con bị chém
+                enemyHealth.TakeDamage(damage); 
             }
 
             Debug.Log("Chém trúng quái!");

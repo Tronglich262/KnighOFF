@@ -40,14 +40,13 @@ public class EnemyHealth : MonoBehaviour
 
         currentHealth -= damage;
 
-        // Hiệu ứng hit (rung nhẹ)
         StartCoroutine(HitEffect());
 
         if (currentHealth <= 0)
         {
             if (enemy != null)
             {
-                enemy.StartCoroutine(enemy.DieSequence()); // gọi die từ Enemy
+                enemy.StartCoroutine(enemy.DieSequence()); 
             }
             else
             {
@@ -58,7 +57,6 @@ public class EnemyHealth : MonoBehaviour
 
     IEnumerator HitEffect()
     {
-        // đổi màu đỏ khi bị đánh
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         if (sr != null)
         {

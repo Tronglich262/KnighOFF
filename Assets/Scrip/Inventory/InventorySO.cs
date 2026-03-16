@@ -26,11 +26,11 @@ namespace Inventory.Model
 
         public int AddItem(ItemSO item, int quantity,List<ItemParameter> itemState = null)
         {
-            if (!item.IsStackable == false)
+            if (!item.IsStackable)
             {
                 for (int i = 0; i < inventoryItems.Count; i++)
                 {
-                    while (quantity > 0 && IsInventoryFull() == false)// Sửa điều kiện vòng lặp
+                    while (quantity > 0 && IsInventoryFull() == false)
                     {
                         quantity -= AddItemToFirstFreeSlot(item, 1);
                     }
@@ -45,7 +45,7 @@ namespace Inventory.Model
 
         private int AddNonStackableItem(ItemSO item, int quantity)
         {
-            int addedCount = 0; // Số lượng thực tế đã thêm vào túi
+            int addedCount = 0; 
 
             for (int i = 0; i < inventoryItems.Count; i++)
             {
@@ -55,12 +55,12 @@ namespace Inventory.Model
                     addedCount++;
                     quantity--;
 
-                    if (quantity <= 0) // Nếu đã thêm hết thì dừng vòng lặp
+                    if (quantity <= 0) 
                         break;
                 }
             }
 
-            return addedCount; // Trả về số lượng đã thêm
+            return addedCount; 
         }
 
 
@@ -145,14 +145,14 @@ namespace Inventory.Model
 
         public void SwapItems(int index1, int index2)
         {
-            if (index1 == index2) return; // Không swap nếu cùng vị trí
-            if (inventoryItems[index1].IsEmpty && inventoryItems[index2].IsEmpty) return; // Nếu cả hai rỗng, không làm gì
+            if (index1 == index2) return; 
+            if (inventoryItems[index1].IsEmpty && inventoryItems[index2].IsEmpty) return; 
 
             var temp = inventoryItems[index1];
             inventoryItems[index1] = inventoryItems[index2];
             inventoryItems[index2] = temp;
 
-            OnInventoryUpdated?.Invoke(GetCurrentInventoryState()); // Cập nhật UI
+            OnInventoryUpdated?.Invoke(GetCurrentInventoryState()); 
         }
 
 

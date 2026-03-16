@@ -3,13 +3,13 @@ using System.Collections;
 
 public class LightningSpawner : MonoBehaviour
 {
-    public GameObject lightningPrefab; // Prefab sét
-    public float minSpawnTime = 1f; // Thời gian nhỏ nhất giữa các lần xuất hiện
-    public float maxSpawnTime = 2f; // Thời gian lớn nhất giữa các lần xuất hiện
-    public float lightningLifetime = 0.5f; // Thời gian sét tồn tại
+    public GameObject lightningPrefab;
+    public float minSpawnTime = 1f;
+    public float maxSpawnTime = 2f;
+    public float lightningLifetime = 0.5f;
 
-    public Vector2 spawnAreaMin; // Góc trái dưới của vùng spawn
-    public Vector2 spawnAreaMax; // Góc phải trên của vùng spawn
+    public Vector2 spawnAreaMin;
+    public Vector2 spawnAreaMax;
 
     void Start()
     {

@@ -6,9 +6,9 @@ using UnityEngine;
 public class ItemSpawner : MonoBehaviour
 {
     
-    public GameObject lootPrefab; // Prefab của viên đạn hoặc vật phẩm
-    public float spawnInterval = 3f; // Thời gian giữa mỗi lần spawn
-    public float fallSpeed = 5f; // Tốc độ rơi
+    public GameObject lootPrefab; 
+    public float spawnInterval = 3f; 
+    public float fallSpeed = 5f;
     private Animator animator;
 
     void Start()
@@ -27,11 +27,10 @@ public class ItemSpawner : MonoBehaviour
 
             if (rb == null)
             {
-                rb = spawnedItem.AddComponent<Rigidbody2D>(); // Nếu chưa có Rigidbody2D thì thêm vào
+                rb = spawnedItem.AddComponent<Rigidbody2D>();
             }
-
-            rb.gravityScale = 1; // Đảm bảo có trọng lực để rơi xuống
-            rb.linearVelocity = new Vector2(0, -fallSpeed); // Tạo vận tốc rơi ngay lập tức
+            rb.gravityScale = 1; 
+            rb.linearVelocity = new Vector2(0, -fallSpeed); 
         }
     }
 }

@@ -8,17 +8,16 @@ public class BulletDestroyBridge : MonoBehaviour
 
     void Start()
     {
-        GameObject bridgeObject = GameObject.FindWithTag("Bridge"); // Tìm Tilemap theo tag
+        GameObject bridgeObject = GameObject.FindWithTag("Bridge"); 
         if (bridgeObject != null)
         {
             bridgeTilemap = bridgeObject.GetComponent<Tilemap>(); 
-            bridgeCollider = bridgeObject.GetComponent<TilemapCollider2D>(); // Lấy TilemapCollider2Ds
+            bridgeCollider = bridgeObject.GetComponent<TilemapCollider2D>(); 
         }
         else
         {
             Debug.LogError("Không tìm thấy Tilemap có tag 'Bridge'!");
         }
-        //lichtrong
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -28,19 +27,15 @@ public class BulletDestroyBridge : MonoBehaviour
             Vector3 hitPosition = collision.contacts[0].point; 
             Vector3Int tilePosition = bridgeTilemap.WorldToCell(hitPosition);
 
-            // Xóa ô tile chính giữa
             if (bridgeTilemap.HasTile(tilePosition))
             {
                 bridgeTilemap.SetTile(tilePosition, null);
             }
-
-            // Cập nhật lại collider sau khi xóa tile
             if (bridgeCollider != null)
             {
                 bridgeCollider.enabled = false;
                 bridgeCollider.enabled = true;
             }
-            //huỷ đạn
             Destroy(gameObject);
         }
     }

@@ -23,9 +23,9 @@ public class MouseFollower : MonoBehaviour
 
     void Update()
     {
-        if (gameObject.activeSelf) // Chỉ chạy khi MouseFollower đang bật
+        if (gameObject.activeSelf) 
         {
-            transform.position = Input.mousePosition; // Cập nhật vị trí theo chuột
+            transform.position = Input.mousePosition; 
         }
     }
 

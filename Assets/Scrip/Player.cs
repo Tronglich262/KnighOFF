@@ -16,12 +16,12 @@ public class Player : MonoBehaviour
     private bool isGrounded;
     public int count = 0;
 
-    public Joystick joystick; // Thêm Joystick
+    public Joystick joystick; 
 
     public Button jumpButton;
     public Button attackButton;
     public Button shieldButton;
-    public Button buffButton; // Nút cho buff (hồi máu)
+    public Button buffButton; 
     public Kiem swordScript;
     public Khien shieldScript;
 
@@ -55,18 +55,18 @@ public class Player : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        DontDestroyOnLoad(gameObject); // Giữ Player giữa các scene
+        DontDestroyOnLoad(gameObject); 
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     public void EnableShieldColliderProxy()
     {
-        shieldScript.EnableShieldCollider(); // Gọi từ Animator
+        shieldScript.EnableShieldCollider(); 
     }
 
     public void EnableSwordColliderProxy()
     {
-        swordScript.EnableSwordCollider(); // Gọi từ Animator
+        swordScript.EnableSwordCollider(); 
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -214,7 +214,7 @@ public class Player : MonoBehaviour
         if (!canUseBuff) return;
 
         animator.SetBool("buff", true);
-        PlayerHealth.instance.IncreaseHealth(20); // Gọi hàm hồi máu
+        PlayerHealth.instance.IncreaseHealth(20);
         Invoke(nameof(StopBuffAnimation), 1f);
 
         canUseBuff = false;

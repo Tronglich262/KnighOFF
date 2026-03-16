@@ -9,7 +9,7 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public int currentScore;
 
-    public event Action OnScoreChanged; // Sự kiện khi điểm thay đổi
+    public event Action OnScoreChanged; 
 
 
     [Header("Coin Multiplier")]
@@ -22,8 +22,8 @@ public class ScoreManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Giữ điểm khi đổi Scene
-            LoadScore(); // Đọc điểm từ PlayerPrefs khi game khởi động
+            DontDestroyOnLoad(gameObject); 
+            LoadScore(); 
         }
         else
         {
@@ -34,7 +34,7 @@ public class ScoreManager : MonoBehaviour
     void Start()
     {
         currencoin = coinMultiplier;
-        UpdateScoreUI(); // Hiển thị điểm ngay lập tức khi vào game
+        UpdateScoreUI(); 
     }
 
     public void AddScore(int amount)
@@ -54,7 +54,7 @@ public class ScoreManager : MonoBehaviour
         return false;
     }
 
-    public void ResetScore() // Thêm chức năng Reset điểm
+    public void ResetScore() 
     {
         currentScore = 0;
         SaveScore();
@@ -62,15 +62,15 @@ public class ScoreManager : MonoBehaviour
 
     void SaveScore()
     {
-        PlayerPrefs.SetInt("SavedScore", currentScore); // Lưu điểm vào bộ nhớ
+        PlayerPrefs.SetInt("SavedScore", currentScore); 
         PlayerPrefs.Save();
         UpdateScoreUI();
-        OnScoreChanged?.Invoke(); // Gọi sự kiện cập nhật UI
+        OnScoreChanged?.Invoke(); 
     }
 
     void LoadScore()
     {
-        currentScore = PlayerPrefs.GetInt("SavedScore", 0); // Đọc điểm đã lưu
+        currentScore = PlayerPrefs.GetInt("SavedScore", 0); 
         UpdateScoreUI();
     }
 
@@ -78,12 +78,12 @@ public class ScoreManager : MonoBehaviour
     {
         if (scoreText == null)
         {
-            scoreText = FindObjectOfType<TextMeshProUGUI>(); // Tìm lại UI khi load Scene mới
+            scoreText = FindObjectOfType<TextMeshProUGUI>(); 
         }
 
         if (scoreText != null)
         {
-            scoreText.text = "Score: " + currentScore; // Cập nhật UI ngay lập tức
+            scoreText.text = "Score: " + currentScore; 
         }
     }
 
@@ -94,7 +94,7 @@ public class ScoreManager : MonoBehaviour
 
     void OnEnable()
     {
-        LoadScore(); // Đảm bảo điểm hiển thị ngay khi Scene mới tải
+        LoadScore(); 
         PhanThuong.OnThuongTiaset += StartCoinX5;
 
     }
