@@ -22,7 +22,7 @@ namespace Inventory.UI
 
         private bool empty = true;
 
-        public int Index { get; private set; } // ✔️ Gán index cho mỗi slot
+        public int Index { get; private set; } 
 
         public void SetIndex(int index)
         {
@@ -109,9 +109,9 @@ namespace Inventory.UI
         }
         public void ClearData()
         {
-            this.itemImage.gameObject.SetActive(false);  // Ẩn hình ảnh
+            this.itemImage.gameObject.SetActive(false);  
             this.itemImage.sprite = null;
-            this.quantityTxt.text = "";                  // Xóa text số lượng
+            this.quantityTxt.text = "";                
             empty = true;
         }
 

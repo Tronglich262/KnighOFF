@@ -13,10 +13,7 @@ public class Xmenu : MonoBehaviour
     public int maxHealth = 100;
     private int currentHealth;
 
-    public Slider healthBar; // Thanh máu UI
-   
-   
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public Slider healthBar; 
     void Start()
     {
         currentHealth = maxHealth;
@@ -24,18 +21,13 @@ public class Xmenu : MonoBehaviour
         healthBar.value = currentHealth;
         if (Tatmenu != null)
         {
-            Tatmenu.SetActive(true); // ✅ Đảm bảo menu luôn bật khi bắt đầu game
+            Tatmenu.SetActive(true); 
         }
 
         if (bando != null)
         {
-            bando.SetActive(false); // ✅ Tắt bản đồ khi bắt đầu game
+            bando.SetActive(false); 
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     public void ToggleMenu()

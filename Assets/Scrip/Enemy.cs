@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Item Drop")]
     [SerializeField] public GameObject itemDropPrefab;
-    [Range(0f, 1f)] public float dropRate = 0.5f; // Tỷ lệ rơi item (50%)
+    [Range(0f, 1f)] public float dropRate = 0.5f; 
 
 
     [Header("Dame Vong QUay 20%")]
@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviour
         if (animator != null)
         {
             animator.SetBool("die", true);
-            yield return new WaitForSeconds(0.3f); // Đợi animation
+            yield return new WaitForSeconds(0.3f); 
         }
 
         Die();
@@ -68,7 +68,7 @@ public class Enemy : MonoBehaviour
         }
 
         EnemyDied?.Invoke(enemyID);
-        Destroy(gameObject); // Xóa enemy
+        Destroy(gameObject); 
     }
     private void OnEnable()
     {

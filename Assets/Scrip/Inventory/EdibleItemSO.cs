@@ -42,9 +42,5 @@ namespace Inventory.Model
         public CharacterStaModifierSO statModifier;
         public float value;
     }
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-
 }
 

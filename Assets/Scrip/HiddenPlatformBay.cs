@@ -3,12 +3,12 @@ using UnityEngine;
 public class HiddenPlatformBay : MonoBehaviour
 {
     private BoxCollider2D boxCollider;
-    private SpriteRenderer spriteRenderer; // Nếu muốn ẩn luôn hình ảnh
+    private SpriteRenderer spriteRenderer; 
 
     void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>(); // Nếu có SpriteRenderer
+        spriteRenderer = GetComponent<SpriteRenderer>(); 
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -16,11 +16,8 @@ public class HiddenPlatformBay : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("Player chạm vào, ẩn nền!");
-
-            // Ẩn Collider để nhân vật rơi xuống
             boxCollider.enabled = false;
 
-            // Ẩn luôn hình ảnh nếu muốn
             if (spriteRenderer != null)
             {
                 spriteRenderer.enabled = false;

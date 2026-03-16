@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class EnemyShooting : MonoBehaviour
 {
-    public Transform gunTransform;  // Gán vị trí súng vào đây
+    public Transform gunTransform;  
     public GameObject bulletPrefab;
-    public Transform firePoint;  // Điểm bắn đạn
+    public Transform firePoint;  
     public float bulletSpeed = 5f;
-    public float fireRate = 2f; // Tốc độ bắn mỗi 2 giây
+    public float fireRate = 2f; 
 
     private float nextFireTime;
     private SpriteRenderer spriteRenderer;
@@ -24,11 +24,11 @@ public class EnemyShooting : MonoBehaviour
 
     void RotateGun()
     {
-        if (spriteRenderer.flipX) // Nếu quái quay trái
+        if (spriteRenderer.flipX)
         {
             gunTransform.localRotation = Quaternion.Euler(0, 0, 180);
         }
-        else // Nếu quái quay phải
+        else 
         {
             gunTransform.localRotation = Quaternion.Euler(0, 0, 0);
         }

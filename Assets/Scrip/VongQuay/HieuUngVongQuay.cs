@@ -64,11 +64,6 @@ public class HieuUngVongQuay : MonoBehaviour
         currentTimess = timest;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-      
-    }
 
     /// <summary>
     /// buff hp
@@ -85,7 +80,7 @@ public class HieuUngVongQuay : MonoBehaviour
         {
             currentTimehpbuff -= Time.deltaTime;
             hptext.text = currentTimehpbuff.ToString("F1") + "s";
-            yield return null; // chờ frame tiếp theo
+            yield return null; 
         }
         hp.SetActive(false);
     }

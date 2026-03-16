@@ -8,11 +8,11 @@ public class BGMPlayer : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject); // Xóa nếu đã có 1 instance tồn tại
+            Destroy(gameObject); 
             return;
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject); // Giữ lại khi load scene mới
+        DontDestroyOnLoad(gameObject); 
     }
 }

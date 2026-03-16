@@ -15,8 +15,6 @@ namespace Inventory.Model
         [field: SerializeField] public string Name { get; set; }
         [field: SerializeField][field: TextArea] public string Description { get; set; }
         [field: SerializeField] public Sprite ItemImage { get; set; }
-
-        // ✅ Thêm dòng này để phân loại item
         [field: SerializeField] public ItemType Type { get; set; }
 
         [field: SerializeField]

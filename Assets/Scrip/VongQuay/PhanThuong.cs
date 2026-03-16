@@ -22,18 +22,8 @@ public class PhanThuong : MonoBehaviour
     public static event thuong OnThuongTiaset2;
     public static event thuong sathuongbuff;
     public static event thuong comaymanbuff;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public PhanThuongType phanThuongType;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   
     /// <summary>
     /// phần thường
     /// </summary>

@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class Spawntroilai : MonoBehaviour
 {
-    public GameObject[] enemyPrefabs; // 7 loại quái vật
-    public Transform[] spawnPoints; // Vị trí spawn
+    public GameObject[] enemyPrefabs; 
+    public Transform[] spawnPoints; 
 
     private Dictionary<int, Vector3> enemySpawnPositions = new Dictionary<int, Vector3>();
     private Dictionary<int, GameObject> enemyInstances = new Dictionary<int, GameObject>();
@@ -52,7 +52,7 @@ public class Spawntroilai : MonoBehaviour
         {
             GameObject enemy = enemyInstances[enemyID];
             enemy.transform.position = enemySpawnPositions[enemyID]; // Đưa về vị trí cũ
-            enemy.SetActive(true); // Bật lại quái vật
+            enemy.SetActive(true); 
         }
     }
 }

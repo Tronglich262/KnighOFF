@@ -8,7 +8,7 @@ public class EnemyNew : MonoBehaviour
 
     private Vector3 target;
     private Transform enemyTransform;
-    private bool movingToB = true; // Xác định hướng di chuyển
+    private bool movingToB = true; 
 
     void Start()
     {
@@ -26,8 +26,6 @@ public class EnemyNew : MonoBehaviour
             movingToB = !movingToB;
             target = movingToB ? pointB.position : pointA.position;
         }
-
-        // Xoay mặt theo hướng di chuyển
         Flip();
     }
 
@@ -36,11 +34,11 @@ public class EnemyNew : MonoBehaviour
         // Kiểm tra hướng di chuyển để quay đúng
         if (target.x > enemyTransform.position.x)
         {
-            enemyTransform.localScale = new Vector3(1, 1, 1); // Quay mặt sang phải
+            enemyTransform.localScale = new Vector3(1, 1, 1); 
         }
         else
         {
-            enemyTransform.localScale = new Vector3(-1, 1, 1); // Quay mặt sang trái
+            enemyTransform.localScale = new Vector3(-1, 1, 1); 
         }
     }
 }

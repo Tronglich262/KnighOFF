@@ -32,7 +32,7 @@ public class BossAl : MonoBehaviour
 
     void Move()
     {
-        if (isAttacking) return; // Dừng di chuyển nếu đang tấn công
+        if (isAttacking) return; 
 
         transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
 
@@ -80,7 +80,7 @@ public class BossAl : MonoBehaviour
             if (animator != null)
             {
                 animator.SetBool("Running", false);
-                animator.SetTrigger("Attack"); // Sử dụng Trigger thay vì Bool
+                animator.SetTrigger("Attack"); 
                 animator.SetBool("Damaged", true);
             }
         }

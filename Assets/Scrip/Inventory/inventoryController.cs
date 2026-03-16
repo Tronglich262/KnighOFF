@@ -16,10 +16,9 @@ namespace Inventory
         public List<InventoryItem> initialItems = new List<InventoryItem>();
         [SerializeField] private AudioClip dropClip;
         [SerializeField] private AudioSource audioSource;
-        public GameObject infoPanel; // Bảng thông tin cần hiện
-        public Button openPanelButton; // Button để mở bảng
+        public GameObject infoPanel;         
+        public Button openPanelButton; 
 
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
 
         private void Start()
         {
@@ -38,7 +37,6 @@ namespace Inventory
                 infoPanel.SetActive(false);
             }
 
-            // 🔹 Load trạng thái mở inventory từ PlayerPrefs
             if (PlayerPrefs.GetInt("InventoryOpen", 0) == 1)
             {
                 invontoryUI.show();
@@ -81,7 +79,7 @@ namespace Inventory
         {
             if (invontoryUI == null) return;
 
-            invontoryUI.ResetAllItems(); // Xóa toàn bộ UI trước khi cập nhật
+            invontoryUI.ResetAllItems(); 
             foreach (var item in inventoryState)
             {
                 if (!item.Value.IsEmpty)
@@ -111,7 +109,7 @@ namespace Inventory
           IItemAction itemAction = inventoryItem.item as IItemAction;
           if (itemAction != null)
           {
-                invontoryUI.ResetSelection(); //  Xoá nút cũ
+                invontoryUI.ResetSelection(); 
                 invontoryUI.ShowItemActions(itemIndex);
 
                 //  Đóng biến index để tránh sai tham chiếu
@@ -133,7 +131,6 @@ namespace Inventory
         {
             inventoryDaTa.RemoveItem(itemIndex, quantity);
             invontoryUI.ResetSelection();
-          //  audioSource.PlayOneShot(dropClip);
         }
 
         public void PerforAction(int itemIndex)
@@ -165,7 +162,6 @@ namespace Inventory
                 inventoryDaTa.RemoveItem(itemIndex, 1);
             }
 
-            // ❌ KHÔNG dùng ResetAllItems()
             //  Chỉ cập nhật đúng 1 slot UI bị thay đổi
             InventoryItem updatedItem = inventoryDaTa.GetItemAt(itemIndex);
             if (!updatedItem.IsEmpty)
@@ -192,7 +188,7 @@ namespace Inventory
         private void HandleSwapItems(int itemIndex_1, int itemIndex_2)
         {
             inventoryDaTa.SwapItems(itemIndex_1, itemIndex_2);
-            invontoryUI.ResetAllItems(); //  Xóa UI item đang kéo
+            invontoryUI.ResetAllItems(); 
             UpdateInventoryUI(inventoryDaTa.GetCurrentInventoryState());
         }
 
@@ -248,7 +244,7 @@ namespace Inventory
                     PlayerPrefs.SetInt("InventoryOpen", 0); //  Lưu trạng thái đóng inventory
                 }
 
-                PlayerPrefs.Save(); // Lưu dữ liệu lại
+                PlayerPrefs.Save(); 
             }
         }
         private void OnDestroy()

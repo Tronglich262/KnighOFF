@@ -13,7 +13,6 @@ namespace Inventory.UI
 
     public class UiinventoryPage : MonoBehaviour
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
         [SerializeField] private UiinventoryItem itemPrefab;
         [SerializeField] private RectTransform contentpanel;
         [SerializeField] private UIInventoryDescription itemdescription;
@@ -166,7 +165,7 @@ namespace Inventory.UI
 //theem
         void Start()
         {
-            inventoryData.LoadInventory();  // 🔹 Load dữ liệu đã lưu
+            inventoryData.LoadInventory();  
             InitializeInventoryUI(inventoryData.Items.Count); 
             UpdateAllItems();
         }
@@ -174,16 +173,10 @@ namespace Inventory.UI
         {
             for (int i = 0; i < inventoryData.Items.Count; i++)
             {
-                //UpdateData(i, inventoryData.Items[i].ItemImage, inventoryData.Items[i].quantity);
             }
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
+      
 
         public void ResetAllItems()
         {
